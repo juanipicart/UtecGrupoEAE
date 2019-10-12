@@ -1,0 +1,10 @@
+CREATE OR REPLACE TRIGGER ZONAS_TRG
+BEFORE INSERT ON ZONAS
+FOR EACH ROW 
+BEGIN
+    SELECT id_zona_seq.nextval
+    INTO :new.id_zona
+    FROM dual;
+END;
+/
+
