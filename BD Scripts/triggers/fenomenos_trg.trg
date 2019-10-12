@@ -1,0 +1,11 @@
+CREATE OR REPLACE TRIGGER fenomenos_trg
+BEFORE INSERT ON fenomenos
+FOR EACH ROW
+BEGIN
+    SELECT  ID_FENOMENO_seq.nextval
+    INTO :new.ID_FENOMENO
+    FROM dual;	
+
+END;
+/
+

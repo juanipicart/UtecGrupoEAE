@@ -1,0 +1,11 @@
+CREATE OR REPLACE TRIGGER localidades_trg
+BEFORE INSERT ON localidades
+FOR EACH ROW
+BEGIN
+    SELECT ID_LOCALIDAD_seq.Nextval
+    INTO :new.ID_LOCALIDAD
+    FROM dual;
+
+END;
+/
+
