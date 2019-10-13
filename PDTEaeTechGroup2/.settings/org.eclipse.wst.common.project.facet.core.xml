@@ -5,4 +5,5 @@
   <fixed facet="java"/>
   <installed facet="java" version="11"/>
   <installed facet="jpt.jpa" version="2.1"/>
+  <installed facet="jst.ejb" version="3.1"/>
 </faceted-project>
