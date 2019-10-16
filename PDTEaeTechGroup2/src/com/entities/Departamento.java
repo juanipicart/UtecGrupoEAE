@@ -10,8 +10,9 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Departamentos.findAll", query="SELECT d FROM Departamentos d")
-public class Departamentos implements Serializable {
+@Table(name = "DEPARTAMENTOS")
+@NamedQuery(name="Departamentos.findAll", query="SELECT d FROM Departamento  d")
+public class Departamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -24,9 +25,9 @@ public class Departamentos implements Serializable {
 
 	//bi-directional many-to-one association to Ubicaciones
 	@OneToMany(mappedBy="departamento")
-	private List<Ubicaciones> ubicaciones;
+	private List<Ubicacion> ubicaciones;
 
-	public Departamentos() {
+	public Departamento() {
 	}
 
 	public String getIdDepartamento() {
@@ -45,22 +46,22 @@ public class Departamentos implements Serializable {
 		this.departamento = departamento;
 	}
 
-	public List<Ubicaciones> getUbicaciones() {
+	public List<Ubicacion> getUbicaciones() {
 		return this.ubicaciones;
 	}
 
-	public void setUbicaciones(List<Ubicaciones> ubicaciones) {
+	public void setUbicaciones(List<Ubicacion> ubicaciones) {
 		this.ubicaciones = ubicaciones;
 	}
 
-	public Ubicaciones addUbicacione(Ubicaciones ubicacione) {
+	public Ubicacion addUbicacione(Ubicacion ubicacione) {
 		getUbicaciones().add(ubicacione);
 		ubicacione.setDepartamento(this);
 
 		return ubicacione;
 	}
 
-	public Ubicaciones removeUbicacione(Ubicaciones ubicacione) {
+	public Ubicacion removeUbicacione(Ubicacion ubicacione) {
 		getUbicaciones().remove(ubicacione);
 		ubicacione.setDepartamento(null);
 
