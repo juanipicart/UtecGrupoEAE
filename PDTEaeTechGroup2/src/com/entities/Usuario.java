@@ -107,13 +107,11 @@ public class Usuario implements Serializable {
 		this.rol = rol;
 	}
 
-	public Usuario(String usuario, String nombre, String apellido, String direccion, Ubicacion ubicacion, Rol rol) {
+	public Usuario(String usuario, String nombre, String apellido, String direccion) {
 		this.usuario = usuario;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.direccion = direccion;
-		this.ubicacion = ubicacion;
-		this.rol = rol;
 	}
 
 	
