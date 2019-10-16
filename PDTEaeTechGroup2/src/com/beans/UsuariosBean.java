@@ -12,24 +12,26 @@ import com.entities.*;
 public class UsuariosBean implements UsuariosBeanRemote {
 
 	@PersistenceContext
-    private EntityManager em;
+    EntityManager em;
 	
     public UsuariosBean() {
-        // TODO Auto-generated constructor stub
     }
     
+    
+    
+    Rol rol = em.find(Rol.class, 1);
+    
+    Ubicacion ubicacion = em.find(Ubicacion.class, 1);
+    
+    Usuario usuario = new Usuario("juani", "Juan", "Picart", "Ni idea", ubicacion, rol);
+    
     @Override
-	public void crearUsuario(String username, String nombre, String apellido, String direccion, int id_ubicacion, int id_rol)  {
-		
-			Usuario usuario = new Usuario();
-			usuario.setUsuario(username);
-			usuario.setNombre(nombre);
-			usuario.setApellido(apellido);
-			usuario.setUbicacion(em.find(Ubicacion.class, id_ubicacion));
-			usuario.setRol(em.find(Rol.class, id_rol));
+	public void crearUsuario(Usuario usuario)  {
 			em.persist(usuario);
 			em.flush();
 		}
+
+	
 		
 	}
 

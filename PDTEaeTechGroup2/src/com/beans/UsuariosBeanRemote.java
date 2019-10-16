@@ -2,10 +2,13 @@ package com.beans;
 
 import javax.ejb.Remote;
 
+import com.entities.Usuario;
+
 @Remote
 public interface UsuariosBeanRemote {
 
-	void crearUsuario(String username, String nombre, String apellido, String direccion, int id_ubicacion, int id_rol);
+
+	void crearUsuario(Usuario usuario);
 	
 
 }

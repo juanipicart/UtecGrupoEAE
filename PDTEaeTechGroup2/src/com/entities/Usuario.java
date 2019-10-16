@@ -20,9 +20,10 @@ public class Usuario implements Serializable {
 	}
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="iduser")
+	@SequenceGenerator(name="iduser", sequenceName = "ID_USER_SEQ", allocationSize = 1)
 	@Column(name = "ID_USER")
-	private Long id;
+	private int id;
 	
 	//Nombre de Usuario
 	@Column(name = "USUARIO")
@@ -41,20 +42,20 @@ public class Usuario implements Serializable {
 	private String direccion;
 	
 	//Ubicación de la persona
-	@OneToOne
-	@Column(name = "ID_UBICACION")
+	@ManyToOne
+	@JoinColumn(name = "ID_UBICACION")
 	private Ubicacion ubicacion;
 	
 	//Rol de la persona
-	@OneToOne
-	@Column(name = "ID_ROL")
+	@ManyToOne
+	@JoinColumn(name = "ID_ROL")
 	private Rol rol;
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -105,6 +106,17 @@ public class Usuario implements Serializable {
 	public void setRol(Rol rol) {
 		this.rol = rol;
 	}
+
+	public Usuario(String usuario, String nombre, String apellido, String direccion, Ubicacion ubicacion, Rol rol) {
+		this.usuario = usuario;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.direccion = direccion;
+		this.ubicacion = ubicacion;
+		this.rol = rol;
+	}
+
+	
 	
 	
 	

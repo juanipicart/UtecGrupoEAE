@@ -8,7 +8,7 @@ import javax.persistence.*;
  *
  */
 @Entity
-@Table (name = "Roles")
+@Table (name = "ROLES_USUARIOS")
 
 public class Rol implements Serializable {
 
@@ -20,6 +20,7 @@ public class Rol implements Serializable {
 	}
    
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID_ROL")
 	private Long id_rol;
 }
