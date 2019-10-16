@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name ="ZONAS")
 
-public class Zonas implements Serializable {
+public class Zona implements Serializable {
 
 	// Se indica la secuencia, valor de crecimiento y un identificador
 	@Id
@@ -26,7 +26,7 @@ public class Zonas implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	public Zonas() {
+	public Zona() {
 		super();
 	}   
 	public Number getId_zona() {
