@@ -24,7 +24,7 @@ public class Localidades implements Serializable {
 
 	//bi-directional many-to-one association to Ubicaciones
 	@OneToMany(mappedBy="localidade")
-	private List<Ubicaciones> ubicaciones;
+	private List<Ubicacion> ubicaciones;
 
 	public Localidades() {
 	}
@@ -45,22 +45,22 @@ public class Localidades implements Serializable {
 		this.localidad = localidad;
 	}
 
-	public List<Ubicaciones> getUbicaciones() {
+	public List<Ubicacion> getUbicaciones() {
 		return this.ubicaciones;
 	}
 
-	public void setUbicaciones(List<Ubicaciones> ubicaciones) {
+	public void setUbicaciones(List<Ubicacion> ubicaciones) {
 		this.ubicaciones = ubicaciones;
 	}
 
-	public Ubicaciones addUbicacione(Ubicaciones ubicacione) {
+	public Ubicacion addUbicacione(Ubicacion ubicacione) {
 		getUbicaciones().add(ubicacione);
 		ubicacione.setLocalidade(this);
 
 		return ubicacione;
 	}
 
-	public Ubicaciones removeUbicacione(Ubicaciones ubicacione) {
+	public Ubicacion removeUbicacione(Ubicacion ubicacione) {
 		getUbicaciones().remove(ubicacione);
 		ubicacione.setLocalidade(null);
 
