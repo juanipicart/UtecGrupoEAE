@@ -3,11 +3,6 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
-/**
- * The persistent class for the FENOMENOS database table.
- * 
- */
 @Entity
 @Table(name="FENOMENOS")
 @NamedQuery(name="Fenomeno.findAll", query="SELECT f FROM Fenomeno f")
@@ -15,8 +10,8 @@ public class Fenomeno implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="FENOMENOS_IDFENOMENO_GENERATOR", sequenceName="ID_FENOMENO_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="FENOMENOS_IDFENOMENO_GENERATOR")
+	@SequenceGenerator(name="FENOMENOS_ID_SEQ", sequenceName="ID_FENOMENO_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="FENOMENOS_ID_SEQ")
 	@Column(name="ID_FENOMENO")
 	private long idFenomeno;
 

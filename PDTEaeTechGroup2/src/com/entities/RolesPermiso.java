@@ -3,11 +3,6 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
-/**
- * The persistent class for the ROLES_PERMISOS database table.
- * 
- */
 @Entity
 @Table(name="ROLES_PERMISOS")
 @NamedQuery(name="RolesPermiso.findAll", query="SELECT r FROM RolesPermiso r")
@@ -19,12 +14,10 @@ public class RolesPermiso implements Serializable {
 
 	private String permiso;
 
-	//bi-directional many-to-one association to Modulo
 	@ManyToOne
 	@JoinColumn(name="ID_MODULO")
 	private Modulo modulo;
 
-	//bi-directional many-to-one association to RolesUsuario
 	@ManyToOne
 	@JoinColumn(name="ID_ROL")
 	private RolesUsuario rolesUsuario;

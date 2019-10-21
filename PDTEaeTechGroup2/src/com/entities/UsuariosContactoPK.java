@@ -3,15 +3,12 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-/**
- * The primary key class for the USUARIOS_CONTACTOS database table.
- * 
- */
 @Embeddable
 public class UsuariosContactoPK implements Serializable {
-	//default serial version id, required for serializable classes.
+
 	private static final long serialVersionUID = 1L;
 
+	////////////////////////	
 	@Column(name="ID_USUARIO", insertable=false, updatable=false)
 	private long idUsuario;
 
@@ -33,6 +30,8 @@ public class UsuariosContactoPK implements Serializable {
 		this.idTipo = idTipo;
 	}
 
+	
+	///////////////////////////////////////////////////
 	public boolean equals(Object other) {
 		if (this == other) {
 			return true;

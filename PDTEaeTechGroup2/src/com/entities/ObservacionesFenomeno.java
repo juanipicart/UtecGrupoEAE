@@ -3,11 +3,6 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
-/**
- * The persistent class for the OBSERVACIONES_FENOMENOS database table.
- * 
- */
 @Entity
 @Table(name="OBSERVACIONES_FENOMENOS")
 @NamedQuery(name="ObservacionesFenomeno.findAll", query="SELECT o FROM ObservacionesFenomeno o")
@@ -19,7 +14,7 @@ public class ObservacionesFenomeno implements Serializable {
 
 	private String valor;
 
-	//bi-directional many-to-one association to FenomenosCaracteristica
+	//muchos a uno, bidirecional
 	@ManyToOne
 	@JoinColumns({
 		@JoinColumn(name="ID_CARACTERISTICA", referencedColumnName="ID_CARACTERISTICA"),
@@ -27,10 +22,10 @@ public class ObservacionesFenomeno implements Serializable {
 		})
 	private FenomenosCaracteristica fenomenosCaracteristica;
 
-	//bi-directional many-to-one association to Observacion
+	//muchos a uno, bidirecional
 	@ManyToOne
 	@JoinColumn(name="ID_OBSERVACION")
-	private Observacion observacione;
+	private Observacion observacion;
 
 	public ObservacionesFenomeno() {
 	}
@@ -59,12 +54,12 @@ public class ObservacionesFenomeno implements Serializable {
 		this.fenomenosCaracteristica = fenomenosCaracteristica;
 	}
 
-	public Observacion getObservacione() {
-		return this.observacione;
+	public Observacion getObservacion() {
+		return this.observacion;
 	}
 
 	public void setObservacione(Observacion observacione) {
-		this.observacione = observacione;
+		this.observacion = observacione;
 	}
 
 }

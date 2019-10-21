@@ -5,11 +5,6 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-
-/**
- * The persistent class for the OBSERVACIONES database table.
- * 
- */
 @Entity
 @Table(name="OBSERVACIONES")
 @NamedQuery(name="Observacion.findAll", query="SELECT o FROM Observacion o")
@@ -17,13 +12,16 @@ public class Observacion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="OBSERVACIONES_IDOBSERVACION_GENERATOR", sequenceName="ID_OBSERVACION_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OBSERVACIONES_IDOBSERVACION_GENERATOR")
+	@SequenceGenerator(name="OBSERVACIONES_ID_SEQ", sequenceName="ID_OBSERVACION_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OBSERVACIONES_ID_SEQ")
 	@Column(name="ID_OBSERVACION")
 	private long idObservacion;
 
 	private String descripcion;
 
+	////  LEER   
+	// https://www.baeldung.com/hibernate-date-time
+	////
 	@Temporal(TemporalType.DATE)
 	@Column(name="FECHA_HORA")
 	private Date fechaHora;
@@ -31,13 +29,12 @@ public class Observacion implements Serializable {
 	private String geolocalizacion;
 
 	@Column(name="ID_UBICACION")
-	private java.math.BigDecimal idUbicacion;
+	private long idUbicacion;
 
 	@Column(name="ID_USUARIO")
-	private java.math.BigDecimal idUsuario;
+	private long idUsuario;
 
-	//bi-directional many-to-one association to ObservacionesEstado
-	@OneToMany(mappedBy="observacione")
+	@OneToMany(mappedBy="observacion")
 	private List<ObservacionesEstado> observacionesEstados;
 
 	public Observacion() {
@@ -75,19 +72,19 @@ public class Observacion implements Serializable {
 		this.geolocalizacion = geolocalizacion;
 	}
 
-	public java.math.BigDecimal getIdUbicacion() {
+	public long getIdUbicacion() {
 		return this.idUbicacion;
 	}
 
-	public void setIdUbicacion(java.math.BigDecimal idUbicacion) {
+	public void setIdUbicacion(long idUbicacion) {
 		this.idUbicacion = idUbicacion;
 	}
 
-	public java.math.BigDecimal getIdUsuario() {
+	public long getIdUsuario() {
 		return this.idUsuario;
 	}
 
-	public void setIdUsuario(java.math.BigDecimal idUsuario) {
+	public void setIdUsuario(long idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 
@@ -101,14 +98,14 @@ public class Observacion implements Serializable {
 
 	public ObservacionesEstado addObservacionesEstado(ObservacionesEstado observacionesEstado) {
 		getObservacionesEstados().add(observacionesEstado);
-		observacionesEstado.setObservacione(this);
+		observacionesEstado.setObservacion(this);
 
 		return observacionesEstado;
 	}
 
 	public ObservacionesEstado removeObservacionesEstado(ObservacionesEstado observacionesEstado) {
 		getObservacionesEstados().remove(observacionesEstado);
-		observacionesEstado.setObservacione(null);
+		observacionesEstado.setObservacion(null);
 
 		return observacionesEstado;
 	}

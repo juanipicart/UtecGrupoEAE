@@ -4,11 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
-/**
- * The persistent class for the LOCALIDADES database table.
- * 
- */
 @Entity
 @Table(name="LOCALIDADES")
 @NamedQuery(name="Localidad.findAll", query="SELECT l FROM Localidad l")
@@ -16,15 +11,14 @@ public class Localidad implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="LOCALIDADES_IDLOCALIDAD_GENERATOR", sequenceName="ID_LOCALIDAD_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="LOCALIDADES_IDLOCALIDAD_GENERATOR")
+	@SequenceGenerator(name="LOCALIDADES_ID_SEQ", sequenceName="ID_LOCALIDAD_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="LOCALIDADES_ID_SEQ")
 	@Column(name="ID_LOCALIDAD")
 	private long idLocalidad;
 
 	private String localidad;
 
-	//bi-directional many-to-one association to Ubicacion
-	@OneToMany(mappedBy="localidade")
+	@OneToMany(mappedBy="localidad")
 	private List<Ubicacion> ubicaciones;
 
 	public Localidad() {
@@ -54,14 +48,14 @@ public class Localidad implements Serializable {
 		this.ubicaciones = ubicaciones;
 	}
 
-	public Ubicacion addUbicacione(Ubicacion ubicacione) {
+	public Ubicacion addUbicacion(Ubicacion ubicacione) {
 		getUbicaciones().add(ubicacione);
 		ubicacione.setLocalidade(this);
 
 		return ubicacione;
 	}
 
-	public Ubicacion removeUbicacione(Ubicacion ubicacione) {
+	public Ubicacion removeUbicacion(Ubicacion ubicacione) {
 		getUbicaciones().remove(ubicacione);
 		ubicacione.setLocalidade(null);
 

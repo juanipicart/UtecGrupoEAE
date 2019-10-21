@@ -2,46 +2,46 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="PDTEaeTechGroup2">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<jta-data-source>java:XAOracleDS</jta-data-source>
 		<class>com.entities.Caracteristica</class>
+		<class>com.entities.Departamento</class>
 		<class>com.entities.Fenomeno</class>
 		<class>com.entities.FenomenosCaracteristica</class>
 		<class>com.entities.FenomenosCaracteristicaPK</class>
-		<class>com.entities.ObservacionesFenomeno</class>
-		<class>com.entities.ObservacionesFenomenoPK</class>
-		<class>com.entities.Departamento</class>
 		<class>com.entities.Localidad</class>
 		<class>com.entities.Modulo</class>
 		<class>com.entities.Observacion</class>
 		<class>com.entities.ObservacionesCriticidad</class>
+		<class>com.entities.ObservacionesCriticidadPK</class>
 		<class>com.entities.ObservacionesDescEstado</class>
 		<class>com.entities.ObservacionesDescNivel</class>
 		<class>com.entities.ObservacionesEstado</class>
+		<class>com.entities.ObservacionesEstadoPK</class>
+		<class>com.entities.ObservacionesFenomeno</class>
+		<class>com.entities.ObservacionesFenomenoPK</class>
 		<class>com.entities.ObservacionesImagen</class>
 		<class>com.entities.ObservacionesImagenPK</class>
 		<class>com.entities.PalabrasProhibida</class>
+		<class>com.entities.Rol</class>
 		<class>com.entities.RolesPermiso</class>
 		<class>com.entities.RolesPermisoPK</class>
 		<class>com.entities.RolesUsuario</class>
 		<class>com.entities.Ubicacion</class>
 		<class>com.entities.Usuario</class>
 		<class>com.entities.UsuariosContacto</class>
+		<class>com.entities.UsuariosContactoPK</class>
 		<class>com.entities.UsuariosDescEstado</class>
 		<class>com.entities.UsuariosDocumento</class>
+		<class>com.entities.UsuariosDocumentoPK</class>
 		<class>com.entities.UsuariosEstado</class>
+		<class>com.entities.UsuariosEstadoPK</class>
 		<class>com.entities.UsuariosPasswd</class>
+		<class>com.entities.UsuariosPasswdPK</class>
 		<class>com.entities.UsuariosTiposContacto</class>
 		<class>com.entities.UsuariosTiposDoc</class>
 		<class>com.entities.Zona</class>
-		<class>com.entities.ObservacionesCriticidadPK</class>
-		<class>com.entities.ObservacionesEstadoPK</class>
-		<class>com.entities.UsuariosContactoPK</class>
-		<class>com.entities.UsuariosDocumentoPK</class>
-		<class>com.entities.UsuariosEstadoPK</class>
-		<class>com.entities.UsuariosPasswdPK</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
-			<property name="hibernate.hbm2ddl.auto" value="update"/>
+			<property name="hibernate.hbm2ddl.auto" value="validate"/>
 			<property name="hibernate.show_sql" value="true"/>
 		</properties>
 	</persistence-unit>

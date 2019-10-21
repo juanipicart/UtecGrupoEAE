@@ -4,11 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 
-
-/**
- * The persistent class for the USUARIOS_DOCUMENTOS database table.
- * 
- */
 @Entity
 @Table(name="USUARIOS_DOCUMENTOS")
 @NamedQuery(name="UsuariosDocumento.findAll", query="SELECT u FROM UsuariosDocumento u")
@@ -16,10 +11,11 @@ public class UsuariosDocumento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private UsuariosDocumentoPK id;
+	private UsuariosDocumentoPK pk;
 
 	private String documento;
 
+	// manejo de fechas 
 	@Temporal(TemporalType.DATE)
 	@Column(name="FECHA_DESDE")
 	private Date fechaDesde;
@@ -42,11 +38,11 @@ public class UsuariosDocumento implements Serializable {
 	}
 
 	public UsuariosDocumentoPK getId() {
-		return this.id;
+		return this.pk;
 	}
 
 	public void setId(UsuariosDocumentoPK id) {
-		this.id = id;
+		this.pk = id;
 	}
 
 	public String getDocumento() {

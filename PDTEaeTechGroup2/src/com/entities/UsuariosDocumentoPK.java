@@ -3,13 +3,8 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-/**
- * The primary key class for the USUARIOS_DOCUMENTOS database table.
- * 
- */
 @Embeddable
 public class UsuariosDocumentoPK implements Serializable {
-	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="ID_USUARIO", insertable=false, updatable=false)
@@ -33,6 +28,10 @@ public class UsuariosDocumentoPK implements Serializable {
 		this.idTipoDoc = idTipoDoc;
 	}
 
+	
+	
+	
+	
 	public boolean equals(Object other) {
 		if (this == other) {
 			return true;

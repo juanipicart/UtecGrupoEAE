@@ -3,15 +3,12 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-/**
- * The primary key class for the FENOMENOS_CARACTERISTICAS database table.
- * 
- */
 @Embeddable
 public class FenomenosCaracteristicaPK implements Serializable {
-	//default serial version id, required for serializable classes.
-	private static final long serialVersionUID = 1L;
 
+	private static final long serialVersionUID = 1L;
+	
+	// NO INSERTA NI ACTUALIZA, SOLO LO USA PARA LEER DATOS
 	@Column(name="ID_FENOMENO", insertable=false, updatable=false)
 	private long idFenomeno;
 
@@ -33,6 +30,8 @@ public class FenomenosCaracteristicaPK implements Serializable {
 		this.idCaracteristica = idCaracteristica;
 	}
 
+	// EMBEDDABLE ME PIDE COLOCAR ESTOS METODOS, SI LOS SACO ME PUTEA
+	// LOS SAQUE DE INTERNET
 	public boolean equals(Object other) {
 		if (this == other) {
 			return true;

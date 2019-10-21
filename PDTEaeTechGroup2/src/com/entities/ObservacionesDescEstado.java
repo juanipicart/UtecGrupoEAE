@@ -4,11 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
-/**
- * The persistent class for the OBSERVACIONES_DESC_ESTADOS database table.
- * 
- */
 @Entity
 @Table(name="OBSERVACIONES_DESC_ESTADOS")
 @NamedQuery(name="ObservacionesDescEstado.findAll", query="SELECT o FROM ObservacionesDescEstado o")
@@ -16,14 +11,13 @@ public class ObservacionesDescEstado implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="OBSERVACIONES_DESC_ESTADOS_IDESTADO_GENERATOR", sequenceName="ID_ESTADO_OBS_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OBSERVACIONES_DESC_ESTADOS_IDESTADO_GENERATOR")
+	@SequenceGenerator(name="OBS_D_E_ID", sequenceName="ID_ESTADO_OBS_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OBS_D_E_ID")
 	@Column(name="ID_ESTADO")
 	private long idEstado;
 
 	private String descripcion;
 
-	//bi-directional many-to-one association to ObservacionesEstado
 	@OneToMany(mappedBy="observacionesDescEstado")
 	private List<ObservacionesEstado> observacionesEstados;
 

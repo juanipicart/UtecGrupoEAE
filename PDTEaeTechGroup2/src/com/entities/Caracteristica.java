@@ -4,11 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
-/**
- * The persistent class for the CARACTERISTICAS database table.
- * 
- */
 @Entity
 @Table(name="CARACTERISTICAS")
 @NamedQuery(name="Caracteristica.findAll", query="SELECT c FROM Caracteristica c")
@@ -16,8 +11,8 @@ public class Caracteristica implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="CARACTERISTICAS_IDCARACTERISTICA_GENERATOR", sequenceName="ID_CARACT_CARACT_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CARACTERISTICAS_IDCARACTERISTICA_GENERATOR")
+	@SequenceGenerator(name="CARACTERISTICAS_ID_SEQ", sequenceName="ID_CARACT_CARACT_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CARACTERISTICAS_ID_SEQ")
 	@Column(name="ID_CARACTERISTICA")
 	private long idCaracteristica;
 
@@ -29,16 +24,10 @@ public class Caracteristica implements Serializable {
 
 	private String tipo;
 
-	//uni-directional many-to-many association to Fenomeno
 	@ManyToMany
 	@JoinTable(
-		name="FENOMENOS_CARACTERISTICAS"
-		, joinColumns={
-			@JoinColumn(name="ID_CARACTERISTICA")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="ID_FENOMENO")
-			}
+		name="FENOMENOS_CARACTERISTICAS", joinColumns={@JoinColumn(name="ID_CARACTERISTICA")
+			}, inverseJoinColumns={	@JoinColumn(name="ID_FENOMENO")	}
 		)
 	private List<Fenomeno> fenomenos;
 

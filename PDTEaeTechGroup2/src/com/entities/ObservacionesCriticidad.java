@@ -4,11 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 
-
-/**
- * The persistent class for the OBSERVACIONES_CRITICIDAD database table.
- * 
- */
 @Entity
 @Table(name="OBSERVACIONES_CRITICIDAD")
 @NamedQuery(name="ObservacionesCriticidad.findAll", query="SELECT o FROM ObservacionesCriticidad o")
@@ -18,16 +13,17 @@ public class ObservacionesCriticidad implements Serializable {
 	@EmbeddedId
 	private ObservacionesCriticidadPK id;
 
+	////   
+	// https://www.baeldung.com/hibernate-date-time
+	////
 	@Temporal(TemporalType.DATE)
 	@Column(name="FECHA_DESDE")
 	private Date fechaDesde;
 
-	//bi-directional many-to-one association to Observacion
 	@ManyToOne
 	@JoinColumn(name="ID_OBSERVACION")
-	private Observacion observacione;
+	private Observacion observacion;
 
-	//bi-directional many-to-one association to ObservacionesDescNivel
 	@ManyToOne
 	@JoinColumn(name="ID_NIVEL")
 	private ObservacionesDescNivel observacionesDescNivel;
@@ -52,11 +48,11 @@ public class ObservacionesCriticidad implements Serializable {
 	}
 
 	public Observacion getObservacione() {
-		return this.observacione;
+		return this.observacion;
 	}
 
-	public void setObservacione(Observacion observacione) {
-		this.observacione = observacione;
+	public void setObservacione(Observacion observacion) {
+		this.observacion = observacion;
 	}
 
 	public ObservacionesDescNivel getObservacionesDescNivel() {

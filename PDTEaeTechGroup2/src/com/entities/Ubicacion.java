@@ -3,11 +3,6 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
-/**
- * The persistent class for the UBICACIONES database table.
- * 
- */
 @Entity
 @Table(name="UBICACIONES")
 @NamedQuery(name="Ubicacion.findAll", query="SELECT u FROM Ubicacion u")
@@ -15,22 +10,19 @@ public class Ubicacion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="UBICACIONES_IDUBICACION_GENERATOR", sequenceName="ID_UBICACION_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="UBICACIONES_IDUBICACION_GENERATOR")
+	@SequenceGenerator(name="UBICACIONES_ID", sequenceName="ID_UBICACION_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="UBICACIONES_ID")
 	@Column(name="ID_UBICACION")
 	private long idUbicacion;
 
-	//bi-directional many-to-one association to Departamento
 	@ManyToOne
 	@JoinColumn(name="ID_DEPARTAMENTO")
 	private Departamento departamento;
 
-	//bi-directional many-to-one association to Localidad
 	@ManyToOne
 	@JoinColumn(name="ID_LOCALIDAD")
-	private Localidad localidade;
+	private Localidad localidad;
 
-	//bi-directional many-to-one association to Zona
 	@ManyToOne
 	@JoinColumn(name="ID_ZONA")
 	private Zona zona;
@@ -55,11 +47,11 @@ public class Ubicacion implements Serializable {
 	}
 
 	public Localidad getLocalidade() {
-		return this.localidade;
+		return this.localidad;
 	}
 
-	public void setLocalidade(Localidad localidade) {
-		this.localidade = localidade;
+	public void setLocalidade(Localidad localidad) {
+		this.localidad = localidad;
 	}
 
 	public Zona getZona() {

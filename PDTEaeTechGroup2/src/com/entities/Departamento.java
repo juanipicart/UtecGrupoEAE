@@ -4,11 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
-/**
- * The persistent class for the DEPARTAMENTOS database table.
- * 
- */
 @Entity
 @Table(name="DEPARTAMENTOS")
 @NamedQuery(name="Departamento.findAll", query="SELECT d FROM Departamento d")
@@ -16,14 +11,13 @@ public class Departamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="DEPARTAMENTOS_IDDEPARTAMENTO_GENERATOR", sequenceName="ID_DEPARTAMENTO_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEPARTAMENTOS_IDDEPARTAMENTO_GENERATOR")
+	@SequenceGenerator(name="DEPARTAMENTOS_ID_SEQ", sequenceName="ID_DEPARTAMENTO_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEPARTAMENTOS_ID_SEQ")
 	@Column(name="ID_DEPARTAMENTO")
 	private String idDepartamento;
 
 	private String departamento;
 
-	//bi-directional many-to-one association to Ubicacion
 	@OneToMany(mappedBy="departamento")
 	private List<Ubicacion> ubicaciones;
 
@@ -54,14 +48,14 @@ public class Departamento implements Serializable {
 		this.ubicaciones = ubicaciones;
 	}
 
-	public Ubicacion addUbicacione(Ubicacion ubicacione) {
+	public Ubicacion addUbicacion(Ubicacion ubicacione) {
 		getUbicaciones().add(ubicacione);
 		ubicacione.setDepartamento(this);
 
 		return ubicacione;
 	}
 
-	public Ubicacion removeUbicacione(Ubicacion ubicacione) {
+	public Ubicacion removeUbicacion(Ubicacion ubicacione) {
 		getUbicaciones().remove(ubicacione);
 		ubicacione.setDepartamento(null);
 

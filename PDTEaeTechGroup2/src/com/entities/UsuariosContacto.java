@@ -3,11 +3,6 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
-/**
- * The persistent class for the USUARIOS_CONTACTOS database table.
- * 
- */
 @Entity
 @Table(name="USUARIOS_CONTACTOS")
 @NamedQuery(name="UsuariosContacto.findAll", query="SELECT u FROM UsuariosContacto u")
@@ -19,12 +14,10 @@ public class UsuariosContacto implements Serializable {
 
 	private String contacto;
 
-	//bi-directional many-to-one association to Usuario
 	@ManyToOne
 	@JoinColumn(name="ID_USUARIO")
 	private Usuario usuario;
 
-	//bi-directional many-to-one association to UsuariosTiposContacto
 	@ManyToOne
 	@JoinColumn(name="ID_TIPO")
 	private UsuariosTiposContacto usuariosTiposContacto;

@@ -3,13 +3,8 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-/**
- * The primary key class for the OBSERVACIONES_CRITICIDAD database table.
- * 
- */
 @Embeddable
 public class ObservacionesCriticidadPK implements Serializable {
-	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="ID_OBSERVACION", insertable=false, updatable=false)
@@ -33,6 +28,8 @@ public class ObservacionesCriticidadPK implements Serializable {
 		this.idNivel = idNivel;
 	}
 
+	// obligado poner esto
+	
 	public boolean equals(Object other) {
 		if (this == other) {
 			return true;

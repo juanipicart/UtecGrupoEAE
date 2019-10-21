@@ -4,11 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 
-
-/**
- * The persistent class for the USUARIOS_ESTADOS database table.
- * 
- */
 @Entity
 @Table(name="USUARIOS_ESTADOS")
 @NamedQuery(name="UsuariosEstado.findAll", query="SELECT u FROM UsuariosEstado u")
@@ -22,12 +17,10 @@ public class UsuariosEstado implements Serializable {
 	@Column(name="FECHA_DESDE")
 	private Date fechaDesde;
 
-	//bi-directional many-to-one association to Usuario
 	@ManyToOne
 	@JoinColumn(name="ID_USUARIO")
 	private Usuario usuario;
 
-	//bi-directional many-to-one association to UsuariosDescEstado
 	@ManyToOne
 	@JoinColumn(name="ID_ESTADO")
 	private UsuariosDescEstado usuariosDescEstado;

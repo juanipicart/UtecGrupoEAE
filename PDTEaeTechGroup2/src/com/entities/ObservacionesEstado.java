@@ -4,11 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 
-
-/**
- * The persistent class for the OBSERVACIONES_ESTADOS database table.
- * 
- */
 @Entity
 @Table(name="OBSERVACIONES_ESTADOS")
 @NamedQuery(name="ObservacionesEstado.findAll", query="SELECT o FROM ObservacionesEstado o")
@@ -18,16 +13,17 @@ public class ObservacionesEstado implements Serializable {
 	@EmbeddedId
 	private ObservacionesEstadoPK id;
 
+	////   
+	// https://www.baeldung.com/hibernate-date-time
+	////
 	@Temporal(TemporalType.DATE)
 	@Column(name="FECHA_DESDE")
 	private Date fechaDesde;
 
-	//bi-directional many-to-one association to Observacion
 	@ManyToOne
 	@JoinColumn(name="ID_OBSERVACION")
-	private Observacion observacione;
+	private Observacion observacion;
 
-	//bi-directional many-to-one association to ObservacionesDescEstado
 	@ManyToOne
 	@JoinColumn(name="ID_ESTADO")
 	private ObservacionesDescEstado observacionesDescEstado;
@@ -51,12 +47,12 @@ public class ObservacionesEstado implements Serializable {
 		this.fechaDesde = fechaDesde;
 	}
 
-	public Observacion getObservacione() {
-		return this.observacione;
+	public Observacion getObservacion() {
+		return this.observacion;
 	}
 
-	public void setObservacione(Observacion observacione) {
-		this.observacione = observacione;
+	public void setObservacion(Observacion observacione) {
+		this.observacion = observacione;
 	}
 
 	public ObservacionesDescEstado getObservacionesDescEstado() {

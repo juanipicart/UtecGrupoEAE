@@ -2,14 +2,8 @@ package com.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
-/**
- * The primary key class for the USUARIOS_PASSWD database table.
- * 
- */
 @Embeddable
 public class UsuariosPasswdPK implements Serializable {
-	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="ID_USER", insertable=false, updatable=false)
@@ -34,6 +28,9 @@ public class UsuariosPasswdPK implements Serializable {
 		this.fechaHasta = fechaHasta;
 	}
 
+	
+	
+	
 	public boolean equals(Object other) {
 		if (this == other) {
 			return true;

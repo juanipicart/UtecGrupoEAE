@@ -4,11 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
-/**
- * The persistent class for the FENOMENOS_CARACTERISTICAS database table.
- * 
- */
 @Entity
 @Table(name="FENOMENOS_CARACTERISTICAS")
 @NamedQuery(name="FenomenosCaracteristica.findAll", query="SELECT f FROM FenomenosCaracteristica f")
@@ -18,7 +13,6 @@ public class FenomenosCaracteristica implements Serializable {
 	@EmbeddedId
 	private FenomenosCaracteristicaPK id;
 
-	//bi-directional many-to-one association to ObservacionesFenomeno
 	@OneToMany(mappedBy="fenomenosCaracteristica")
 	private List<ObservacionesFenomeno> observacionesFenomenos;
 

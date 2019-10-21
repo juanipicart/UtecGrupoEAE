@@ -3,13 +3,9 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-/**
- * The primary key class for the ROLES_PERMISOS database table.
- * 
- */
 @Embeddable
 public class RolesPermisoPK implements Serializable {
-	//default serial version id, required for serializable classes.
+
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="ID_ROL", insertable=false, updatable=false)
@@ -32,7 +28,8 @@ public class RolesPermisoPK implements Serializable {
 	public void setIdModulo(long idModulo) {
 		this.idModulo = idModulo;
 	}
-
+///
+///	
 	public boolean equals(Object other) {
 		if (this == other) {
 			return true;

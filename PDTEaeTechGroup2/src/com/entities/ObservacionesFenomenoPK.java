@@ -3,13 +3,8 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-/**
- * The primary key class for the OBSERVACIONES_FENOMENOS database table.
- * 
- */
 @Embeddable
 public class ObservacionesFenomenoPK implements Serializable {
-	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="ID_OBSERVACION", insertable=false, updatable=false)

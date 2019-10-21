@@ -4,11 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
-/**
- * The persistent class for the USUARIOS_TIPOS_DOC database table.
- * 
- */
 @Entity
 @Table(name="USUARIOS_TIPOS_DOC")
 @NamedQuery(name="UsuariosTiposDoc.findAll", query="SELECT u FROM UsuariosTiposDoc u")
@@ -16,14 +11,13 @@ public class UsuariosTiposDoc implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="USUARIOS_TIPOS_DOC_IDTIPODOC_GENERATOR", sequenceName="ID_TIPO_DOC_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="USUARIOS_TIPOS_DOC_IDTIPODOC_GENERATOR")
+	@SequenceGenerator(name="USUARIOS_TD_ID", sequenceName="ID_TIPO_DOC_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="USUARIOS_TD_ID")
 	@Column(name="ID_TIPO_DOC")
 	private long idTipoDoc;
 
 	private String tipo;
 
-	//bi-directional many-to-one association to UsuariosDocumento
 	@OneToMany(mappedBy="usuariosTiposDoc")
 	private List<UsuariosDocumento> usuariosDocumentos;
 

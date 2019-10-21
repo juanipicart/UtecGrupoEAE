@@ -4,11 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
-/**
- * The persistent class for the USUARIOS database table.
- * 
- */
 @Entity
 @Table(name="USUARIOS")
 @NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u")
@@ -16,38 +11,34 @@ public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="USUARIOS_IDUSER_GENERATOR", sequenceName="ID_USER_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="USUARIOS_IDUSER_GENERATOR")
+	@SequenceGenerator(name="USUARIO_ID", sequenceName="ID_USER_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="USUARIO_ID")
 	@Column(name="ID_USER")
 	private long idUser;
-
+	
+	private String nombre;
+	
 	private String apellido;
 
 	private String direccion;
 
-	@Column(name="ID_ROL")
-	private java.math.BigDecimal idRol;
-
-	@Column(name="ID_UBICACION")
-	private java.math.BigDecimal idUbicacion;
-
-	private String nombre;
-
 	private String usuario;
 
-	//bi-directional many-to-one association to UsuariosContacto
+	@Column(name="ID_ROL")
+	private long idRol;
+
+	@Column(name="ID_UBICACION")
+	private long idUbicacion;
+
 	@OneToMany(mappedBy="usuario")
 	private List<UsuariosContacto> usuariosContactos;
 
-	//bi-directional many-to-one association to UsuariosDocumento
 	@OneToMany(mappedBy="usuario")
 	private List<UsuariosDocumento> usuariosDocumentos;
 
-	//bi-directional many-to-one association to UsuariosEstado
 	@OneToMany(mappedBy="usuario")
 	private List<UsuariosEstado> usuariosEstados;
 
-	//bi-directional many-to-one association to UsuariosPasswd
 	@OneToMany(mappedBy="usuario")
 	private List<UsuariosPasswd> usuariosPasswds;
 
@@ -78,19 +69,19 @@ public class Usuario implements Serializable {
 		this.direccion = direccion;
 	}
 
-	public java.math.BigDecimal getIdRol() {
+	public long getIdRol() {
 		return this.idRol;
 	}
 
-	public void setIdRol(java.math.BigDecimal idRol) {
+	public void setIdRol(long idRol) {
 		this.idRol = idRol;
 	}
 
-	public java.math.BigDecimal getIdUbicacion() {
+	public long getIdUbicacion() {
 		return this.idUbicacion;
 	}
 
-	public void setIdUbicacion(java.math.BigDecimal idUbicacion) {
+	public void setIdUbicacion(long  idUbicacion) {
 		this.idUbicacion = idUbicacion;
 	}
 
@@ -110,6 +101,7 @@ public class Usuario implements Serializable {
 		this.usuario = usuario;
 	}
 
+////////////////////
 	public List<UsuariosContacto> getUsuariosContactos() {
 		return this.usuariosContactos;
 	}
@@ -131,7 +123,8 @@ public class Usuario implements Serializable {
 
 		return usuariosContacto;
 	}
-
+//////////////////
+	
 	public List<UsuariosDocumento> getUsuariosDocumentos() {
 		return this.usuariosDocumentos;
 	}
@@ -154,6 +147,8 @@ public class Usuario implements Serializable {
 		return usuariosDocumento;
 	}
 
+	///////////////////////////////
+	
 	public List<UsuariosEstado> getUsuariosEstados() {
 		return this.usuariosEstados;
 	}
@@ -175,6 +170,8 @@ public class Usuario implements Serializable {
 
 		return usuariosEstado;
 	}
+	
+	////////////////////////////////////////////
 
 	public List<UsuariosPasswd> getUsuariosPasswds() {
 		return this.usuariosPasswds;

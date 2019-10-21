@@ -3,11 +3,6 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
-/**
- * The persistent class for the OBSERVACIONES_IMAGENES database table.
- * 
- */
 @Entity
 @Table(name="OBSERVACIONES_IMAGENES")
 @NamedQuery(name="ObservacionesImagen.findAll", query="SELECT o FROM ObservacionesImagen o")
@@ -17,13 +12,13 @@ public class ObservacionesImagen implements Serializable {
 	@EmbeddedId
 	private ObservacionesImagenPK id;
 
+	// segun vi, es asi el BLOB
 	@Lob
 	private byte[] imagen;
 
-	//bi-directional many-to-one association to Observacion
 	@ManyToOne
 	@JoinColumn(name="ID_OBSERVACION")
-	private Observacion observacione;
+	private Observacion observacion;
 
 	public ObservacionesImagen() {
 	}
@@ -44,12 +39,12 @@ public class ObservacionesImagen implements Serializable {
 		this.imagen = imagen;
 	}
 
-	public Observacion getObservacione() {
-		return this.observacione;
+	public Observacion getObservacion() {
+		return this.observacion;
 	}
 
-	public void setObservacione(Observacion observacione) {
-		this.observacione = observacione;
+	public void setObservacion(Observacion observacion) {
+		this.observacion = observacion;
 	}
 
 }

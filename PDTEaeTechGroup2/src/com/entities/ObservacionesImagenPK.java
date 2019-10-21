@@ -3,13 +3,8 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-/**
- * The primary key class for the OBSERVACIONES_IMAGENES database table.
- * 
- */
 @Embeddable
 public class ObservacionesImagenPK implements Serializable {
-	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="ID_OBSERVACION", insertable=false, updatable=false)
@@ -32,6 +27,8 @@ public class ObservacionesImagenPK implements Serializable {
 		this.archivo = archivo;
 	}
 
+	/// 
+	///
 	public boolean equals(Object other) {
 		if (this == other) {
 			return true;

@@ -4,11 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
-/**
- * The persistent class for the ZONAS database table.
- * 
- */
 @Entity
 @Table(name="ZONAS")
 @NamedQuery(name="Zona.findAll", query="SELECT z FROM Zona z")
@@ -16,14 +11,13 @@ public class Zona implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="ZONAS_IDZONA_GENERATOR", sequenceName="ID_ZONA_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ZONAS_IDZONA_GENERATOR")
+	@SequenceGenerator(name="ZONAS_ID", sequenceName="ID_ZONA_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ZONAS_ID")
 	@Column(name="ID_ZONA")
 	private long idZona;
 
 	private String descripcion;
 
-	//bi-directional many-to-one association to Ubicacion
 	@OneToMany(mappedBy="zona")
 	private List<Ubicacion> ubicaciones;
 

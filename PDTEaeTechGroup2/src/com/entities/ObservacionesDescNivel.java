@@ -4,11 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
-/**
- * The persistent class for the OBSERVACIONES_DESC_NIVEL database table.
- * 
- */
 @Entity
 @Table(name="OBSERVACIONES_DESC_NIVEL")
 @NamedQuery(name="ObservacionesDescNivel.findAll", query="SELECT o FROM ObservacionesDescNivel o")
@@ -16,8 +11,8 @@ public class ObservacionesDescNivel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="OBSERVACIONES_DESC_NIVEL_IDNIVEL_GENERATOR", sequenceName="ID_NIVEL_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OBSERVACIONES_DESC_NIVEL_IDNIVEL_GENERATOR")
+	@SequenceGenerator(name="OBS_DESC_NIVEL_ID", sequenceName="ID_NIVEL_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OBS_DESC_NIVEL_ID")
 	@Column(name="ID_NIVEL")
 	private long idNivel;
 
@@ -26,9 +21,8 @@ public class ObservacionesDescNivel implements Serializable {
 	@Column(name="DESCRIPCION_CORTA")
 	private String descripcionCorta;
 
-	//bi-directional many-to-one association to ObservacionesCriticidad
 	@OneToMany(mappedBy="observacionesDescNivel")
-	private List<ObservacionesCriticidad> observacionesCriticidads;
+	private List<ObservacionesCriticidad> observacionesCriticidad;
 
 	public ObservacionesDescNivel() {
 	}
@@ -57,23 +51,23 @@ public class ObservacionesDescNivel implements Serializable {
 		this.descripcionCorta = descripcionCorta;
 	}
 
-	public List<ObservacionesCriticidad> getObservacionesCriticidads() {
-		return this.observacionesCriticidads;
+	public List<ObservacionesCriticidad> getObservacionesCriticidad() {
+		return this.observacionesCriticidad;
 	}
 
-	public void setObservacionesCriticidads(List<ObservacionesCriticidad> observacionesCriticidads) {
-		this.observacionesCriticidads = observacionesCriticidads;
+	public void setObservacionesCriticidad(List<ObservacionesCriticidad> observacionesCriticidads) {
+		this.observacionesCriticidad = observacionesCriticidads;
 	}
 
 	public ObservacionesCriticidad addObservacionesCriticidad(ObservacionesCriticidad observacionesCriticidad) {
-		getObservacionesCriticidads().add(observacionesCriticidad);
+		getObservacionesCriticidad().add(observacionesCriticidad);
 		observacionesCriticidad.setObservacionesDescNivel(this);
 
 		return observacionesCriticidad;
 	}
 
 	public ObservacionesCriticidad removeObservacionesCriticidad(ObservacionesCriticidad observacionesCriticidad) {
-		getObservacionesCriticidads().remove(observacionesCriticidad);
+		getObservacionesCriticidad().remove(observacionesCriticidad);
 		observacionesCriticidad.setObservacionesDescNivel(null);
 
 		return observacionesCriticidad;
