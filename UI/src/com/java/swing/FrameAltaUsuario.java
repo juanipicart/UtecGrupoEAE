@@ -318,11 +318,7 @@ public class FrameAltaUsuario implements ActionListener {
 	 * Como implementos Action Listener, quiere decir que soy escuchado de
 	 * eventos. Este método es quien se ejecutan cuando tocan un boton .
 	 */
-	
-	public void actionPerformed2(ActionEvent e) {
-        depto = comboDepto.getSelectedItem().toString();
-    }
-	
+		
 	@Override
 	public void actionPerformed(ActionEvent e) {
 

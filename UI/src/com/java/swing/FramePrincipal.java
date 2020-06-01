@@ -7,7 +7,6 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,20 +16,23 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.beans.UbicacionesBeanRemote;
+import com.clases.Usuario;
 
 public class FramePrincipal {
 
-	public static void main(String[] args) throws NamingException {
+	private static Usuario usuario;
+	
+	private static JButton botonRegistrarFenomeno;
+	private static JButton botonRegistrarObservacion;
+	private static JButton botonRegistrarUsuario;
+	private static JButton botonModificarUsuario;
+	private static JButton botonEliminarUsuario;
 
-			javax.swing.SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					createAndShowGUI();
-				}
-			});
-				
-		}
 		
+	public FramePrincipal(Usuario user) {
+		usuario = user;
+	}
+	
 		private static void createAndShowGUI() {
 
 		
@@ -43,19 +45,26 @@ public class FramePrincipal {
 		frame.setBackground(Color.BLUE);
 		
 		initializeMenuBar(frame);
+		initializeCentralPanel(frame);
 
 		// Display the window.
 		frame.setVisible(true);
 		}
 		
+		//Inicializamos la barra del menú superior
+		
 		private static void initializeMenuBar(JFrame frame) {
 			
 			JMenuBar menuBar = new JMenuBar();
 			
-			initializeMenuUsuarios(menuBar, frame);
-			initializeMenuObservaciones(menuBar, frame);
-			initializeMenuFenomenos(menuBar, frame);
-			
+			if (usuario.getRol() == 1) {
+				initializeMenuUsuarios(menuBar, frame);
+				initializeMenuObservaciones(menuBar, frame);
+				initializeMenuFenomenos(menuBar, frame);
+			} else {
+				initializeMenuObservaciones(menuBar, frame);
+			}
+						
 			frame.setJMenuBar(menuBar);
 
 		}
@@ -180,35 +189,37 @@ public class FramePrincipal {
 			fenomenos.add(modifFenomeno);
 			fenomenos.add(bajaFenomeno);
 			menuBar.add(fenomenos);
-		
-			//Accesos directos
-		JButton botonRegistrarFenomeno = new JButton("Registrar fenómeno");
+		}
+			
+		//Accesos directos
+		private static void initializeCentralPanel(JFrame frame) {
+			
+		botonRegistrarFenomeno = new JButton("Registrar fenómeno");
 		botonRegistrarFenomeno.setFont(new Font("Dialog",Font.BOLD,12));
 		botonRegistrarFenomeno.setSize(50, 10);
 	
-		JButton botonRegistrarObservacion = new JButton("Registrar observación");
+		botonRegistrarObservacion = new JButton("Registrar observación");
 		botonRegistrarObservacion.setFont (new Font("Dialog",Font.BOLD,12));
 		botonRegistrarObservacion.setSize(50, 10);
 		
-		JButton botonRegistrarUsuario = new JButton("Nuevo usuario");
+		botonRegistrarUsuario = new JButton("Nuevo usuario");
 		botonRegistrarUsuario.setFont (new Font("Dialog",Font.BOLD,12));
 		botonRegistrarUsuario.setSize(50, 10);
 		
-		JButton botonModificarUsuario = new JButton("Modificar usuario");
+		botonModificarUsuario = new JButton("Modificar usuario");
 		botonModificarUsuario.setFont (new Font("Dialog",Font.BOLD,12));
 		botonModificarUsuario.setSize(50, 10);
 		
-		JButton botonEliminarUsuario = new JButton("Eliminar usuario");
+		botonEliminarUsuario = new JButton("Eliminar usuario");
 		botonModificarUsuario.setFont (new Font("Dialog",Font.BOLD,12));
 		botonModificarUsuario.setSize(50, 10);
 		
 	    JPanel panelCentroSistema = new JPanel (new GridBagLayout());
 	    GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.CENTER;
-		
-		
 	    panelCentroSistema.setBorder(new EmptyBorder(30,30,30,30));
 	    
+	    if (usuario.getRol() == 1) {
 	    constraints.gridx = 0;
 	    constraints.gridy = 0;
 	    constraints.gridwidth = 1;
@@ -235,12 +246,18 @@ public class FramePrincipal {
 	    constraints.gridy = 4;
 	    constraints.gridwidth = 1;
 	    
-	    panelCentroSistema.add (botonEliminarUsuario);
-	    
+	    panelCentroSistema.add (botonEliminarUsuario); 
+	    } else {
+	    	constraints.gridx = 0;
+		    constraints.gridy = 0;
+		    constraints.gridwidth = 1;
+		    panelCentroSistema.add (botonRegistrarObservacion);	    	
+	    }
+   
 	    frame.add(panelCentroSistema);
 	    frame.pack();
 	    frame.setVisible(true);
- 
+	    
 	    botonRegistrarUsuario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -292,6 +309,10 @@ public class FramePrincipal {
         });
 	 
 	}
+		
+		public void setVisible(boolean b) {
+			createAndShowGUI();
+		}
 		
 		
 }

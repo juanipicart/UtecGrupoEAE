@@ -1,6 +1,8 @@
 package com.java.swing;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -29,7 +31,9 @@ public class FrameLogin {
 	private static JTextField textUsername;
 	private static JTextField textPassword;
 
-	private JButton buttonIngresar;
+	private static JButton buttonIngresar;
+	private static JButton buttonCancelar;
+
 	
 	public static void main(String[] args) throws NamingException {
 
@@ -38,8 +42,6 @@ public class FrameLogin {
 				createAndShowGUI();
 			}
 		});
-		
-		
 			
 	}
 	
@@ -70,7 +72,7 @@ public class FrameLogin {
 		textUsername = new JTextField(30);
 		textPassword = new JTextField(30);
 		
-		JButton buttonIngresar = new JButton("Ingresar");
+		buttonIngresar = new JButton("Ingresar");
 		buttonIngresar.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent event) {
@@ -79,8 +81,19 @@ public class FrameLogin {
 	            	
 	            }
 	        });
+		
+		buttonCancelar = new JButton("Cancelar");
+		buttonCancelar.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent event) {
+	                
+	            	accionCancelar();
+	            	
+	            }
+	        });
 
 		JPanel loginPanel = new JPanel(new GridBagLayout());
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
@@ -100,18 +113,15 @@ public class FrameLogin {
 		constraints.gridx = 1;
 		loginPanel.add(textPassword, constraints);
 		
-		
-		constraints.gridx = 0;
-		constraints.gridy = 3;
-		constraints.gridwidth = 5;
-		constraints.anchor = GridBagConstraints.CENTER;
-		loginPanel.add(buttonIngresar, constraints);
+		buttonPanel.add(buttonIngresar);
+		buttonPanel.add(buttonCancelar);
 		
 		loginPanel
 		.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Ingreso al sistema"));
 		// Display the window.
 		
-		frame.add(loginPanel);
+		frame.add(loginPanel, BorderLayout.NORTH);
+		frame.add(buttonPanel, BorderLayout.SOUTH);
 
 		frame.pack();
 		frame.setVisible(true);
@@ -131,13 +141,18 @@ public class FrameLogin {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(loginExitoso);
+		
 		if(loginExitoso) {
 			
 			try {
-				FramePrincipal.main(null);
+				//Si los datos son validos creo el objeto Usuario para obtener el rol y definir los permisos
+				Jframe.dispose();
+				Usuario usuario = ClienteGeoPosUy.buscarUsuarioPorUsername(username);
+				FramePrincipal framePrincipal = new FramePrincipal(usuario);
+				framePrincipal.setVisible(true);
 			} catch (NamingException e) {
-				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}else {
@@ -145,5 +160,11 @@ public class FrameLogin {
 					JOptionPane.WARNING_MESSAGE);
 			
 		}
-}
+	}
+	
+	private static void accionCancelar() {
+		// si se cancela, se eliminar la ventana
+		Jframe.dispose();
+
+	}
 }
