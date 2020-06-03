@@ -38,6 +38,7 @@ import javax.swing.border.EmptyBorder;
 import com.beans.UbicacionesBeanRemote;
 import com.beans.UsuarioBean;
 import com.beans.UsuarioBeanRemote;
+import com.clases.Usuario;
 import com.clases.codigueras.CodDepartamento;
 import com.clases.codigueras.CodLocalidad;
 import com.clases.codigueras.Rol;
@@ -378,20 +379,39 @@ public class FrameAltaUsuario implements ActionListener {
 		
 		
 		try {
+			//Me fijo si el username o el documento ya existen en el sistema
+			Usuario usuarioByUsername = ClienteGeoPosUy.buscarUsuarioPorUsername(fieldUsername); 
+			Usuario usuarioByDoc = ClienteGeoPosUy.buscarUsuarioPorDocumento(mapTiposDoc.get(tipoDoc), fieldDoc);
 			
-			//boolean existeUsuario = ClienteGeoPosUy.existeUsuario(fieldUsername); //validacion que ya estaba en backend
-									
-			//if(!existeUsuario) {
-			boolean correctamente = ClienteGeoPosUy.registrarUsuario(fieldUsername, fieldNombre, fieldApellido, fieldDireccion, mapRoles.get(rol), mapLocs.get(localidad), 
+			boolean username = false;
+			boolean userDoc =false;
+			
+			if (!(usuarioByUsername == null)) {
+				username = true;
+			} else if (!(usuarioByDoc == null)) {
+				userDoc = true;
+			}
+			
+			//Si no existe lo registro, si existe muestro el mensaje de error correspondiente
+			if (!username && !userDoc) {
+			ClienteGeoPosUy.registrarUsuario(fieldUsername, fieldNombre, fieldApellido, fieldDireccion, mapRoles.get(rol), mapLocs.get(localidad), 
 					mapZonas.get(zona), mapEstados.get(estado), mapDeptos.get(depto), fieldCorreo, fieldPassword, mapTiposDoc.get(tipoDoc), fieldDoc);
-			if(correctamente) {
+			
 				JOptionPane.showMessageDialog(frame, "Usuario registrado correctamente", "Registro completado!",
 						JOptionPane.WARNING_MESSAGE);
-			}
-				//}
+				frame.dispose();
+			} else if (username) {
+				JOptionPane.showMessageDialog(frame, "El nombre de usuario ya se encuentra registrado", "Ha ocurrido un error",
+						JOptionPane.WARNING_MESSAGE);
+			} else if (userDoc) {
+				JOptionPane.showMessageDialog(frame, "El documento ya se encuentra registrado", "Ha ocurrido un error",
+						JOptionPane.WARNING_MESSAGE);
+			} 
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+			JOptionPane.showMessageDialog(frame, "El servidor no se encuentra disponible. Contacte al administrador", "Ha ocurrido un error",
+					JOptionPane.WARNING_MESSAGE);
+		} 
 		
 		
 		
@@ -399,58 +419,7 @@ public class FrameAltaUsuario implements ActionListener {
 		
 		
 		}
-
 	
-
-		// Validamos si el formato del mail es valido
-
-	/*public boolean existeUsuario(String username) {
-		boolean existe = false;
-		try{
-			existe = ClienteGeoPosUy.existeUsuario(username);
-		} catch (Exception e){
-			JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
-					"Error de conexión!", JOptionPane.WARNING_MESSAGE);
-		}
-		
-		if (existe) {
-			JOptionPane.showMessageDialog(frame, "Ya existe un usuario con ese username",
-					"Usuario existente!", JOptionPane.WARNING_MESSAGE);
-		}
-		return existe;		
-	}*/
-		
-
-
-		/*// Valiamos ahora, que no exista un cliente con dicha CI
-		boolean existe = ControladorClientes.existeCliente(fieldCi);
-
-		if (existe) {
-			JOptionPane.showMessageDialog(frame, "El cliente con dicha CI ya se ecuentra registrado.",
-					"Cliente Existente!", JOptionPane.WARNING_MESSAGE);
-
-			return;
-		}*/
-
-		// Si estamos aquí,..quiere decir que no hay errores. Almacenamos el
-		// cliente y volvemos al menu
-		/*boolean almacenado = ControladorClientes.ingresarNuevoCliente(fieldNombre, fieldApellido, fieldCi);
-
-		if (almacenado) {
-			JOptionPane.showMessageDialog(frame, "El cliente ha sido registrado con éxito.",
-					"Cliente Registrado!", JOptionPane.INFORMATION_MESSAGE);
-			
-			// cerramos la ventanta
-			this.frame.dispose();
-
-			
-		}
-		else{
-			JOptionPane.showMessageDialog(frame, "Hubo un error al almacenar. Intente nuevamente más tarde",
-					"Error al registrar!", JOptionPane.ERROR_MESSAGE);
-		}
-
-	}*/
 
 	private void accionCancelar() {
 		// si se cancela, se eliminar la ventana
@@ -573,71 +542,4 @@ public class FrameAltaUsuario implements ActionListener {
 
 		return combo;
 	}
-
-	/*
-	 JButton botonRegistrar = new JButton("Registrar");
-	    botonRegistrar.setFont (new Font("Dialog",Font.BOLD,12));
-	    
-	    JButton botonCancelarRegistro = new JButton("Cancelar");
-	    botonCancelarRegistro.setFont (new Font("Dialog",Font.BOLD,12));
-	    
-	    JPanel panelSurRegistro = new JPanel(new GridLayout(1,2,10,0));
-	    panelSurRegistro.add (botonRegistrar);
-	    panelSurRegistro.add (botonCancelarRegistro);
-	
-
-	    
-	    JLabel labelUsernameRegistro = new JLabel();
-	    labelUsernameRegistro.setText ("Username:");
-	    labelUsernameRegistro.setBackground (new Color(255,255,204));
-	    
-	    JLabel labelPasswordRegistro = new JLabel();
-	    labelPasswordRegistro.setText ("Password:");
-	    labelPasswordRegistro.setBackground (new Color(255,255,204));
-	    
-	    JLabel labelNombreRegistro = new JLabel();
-	    labelNombreRegistro.setText ("Nombre:");
-	    labelNombreRegistro.setBackground (new Color(255,255,204));
-	    
-	    JLabel labelApellidoRegistro = new JLabel();
-	    labelApellidoRegistro.setText ("Apellido:");
-	    labelApellidoRegistro.setBackground (new Color(255,255,204));
-	    
-	    JLabel labelDireccionRegistro = new JLabel();
-	    labelDireccionRegistro.setText ("Direccion:");
-	    labelDireccionRegistro.setBackground (new Color(255,255,204));
-	    
-	    
-	    JPanel panelOesteRegistro = new JPanel(new GridLayout(5,1,5,5));
-	    panelOesteRegistro.setBorder(new EmptyBorder(10,10,10,10));
-	    panelOesteRegistro.add(labelUsernameRegistro);
-	    panelOesteRegistro.add(labelPasswordRegistro);
-	    panelOesteRegistro.add(labelNombreRegistro);
-	    panelOesteRegistro.add(labelApellidoRegistro);
-	    panelOesteRegistro.add(labelDireccionRegistro);
-	    
-	    
-	    
-	   
-	    JPanel panelCentroRegistro = new JPanel(new GridLayout(5,1,5,50));	   
-	    panelCentroRegistro.setBorder(new EmptyBorder(50,10,10,50));
-	    panelCentroRegistro.add (textFieldUsernameRegistro);
-	    panelCentroRegistro.add (textFieldPasswordRegistro);
-	    panelCentroRegistro.add (textFieldNombreRegistro);
-	    panelCentroRegistro.add (textFieldApellidoRegistro);
-	    panelCentroRegistro.add (textFieldDireccionRegistro);
-	    
-	    JFrame ventanaRegistro = new JFrame ("Registro de usuario");
-	    ventanaRegistro.setSize(800,800);
-	    ventanaRegistro.add (panelOesteRegistro, BorderLayout.WEST);
-	    ventanaRegistro.add (panelCentroRegistro, BorderLayout.CENTER);
-	    ventanaRegistro.add (panelSurRegistro, BorderLayout.SOUTH);
-	    ventanaRegistro.setVisible(false);*/
-	
-	    
-
-	    
-	    
-	    
-
 }

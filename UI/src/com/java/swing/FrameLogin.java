@@ -34,6 +34,7 @@ public class FrameLogin {
 	private static JButton buttonIngresar;
 	private static JButton buttonCancelar;
 
+	private static Usuario usuario;
 	
 	public static void main(String[] args) throws NamingException {
 
@@ -134,32 +135,41 @@ public class FrameLogin {
 		String username = textUsername.getText();
 		String password = textPassword.getText();
 		
+		//Verifico usuario y contraseña
 		boolean loginExitoso = false;
 		try {
 			loginExitoso = ClienteGeoPosUy.validarLogin(username, password);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		if(loginExitoso) {
-			
+		//Verifico el estado del usuario	
+		boolean usuarioActivo = false;
+		if (loginExitoso) {
 			try {
-				//Si los datos son validos creo el objeto Usuario para obtener el rol y definir los permisos
-				Jframe.dispose();
-				Usuario usuario = ClienteGeoPosUy.buscarUsuarioPorUsername(username);
-				FramePrincipal framePrincipal = new FramePrincipal(usuario);
-				framePrincipal.setVisible(true);
-			} catch (NamingException e) {
-				e.printStackTrace();
+				usuario = ClienteGeoPosUy.buscarUsuarioPorUsername(username);
+				usuarioActivo = (usuario.getEstado() == 1);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else {
-			JOptionPane.showMessageDialog(Jframe, "Verifique sus datos de ingreso e intentelo nuevamente", "Ha ocurrido un error!",
-					JOptionPane.WARNING_MESSAGE);
-			
-		}
+		} 
+		
+		if (usuarioActivo && loginExitoso) {			
+			try {
+				//Si los datos son validos creo el objeto Usuario para obtener el rol y definir los permisos
+				Jframe.dispose();
+				FramePrincipal framePrincipal = new FramePrincipal(usuario);
+				framePrincipal.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if ((!usuarioActivo && loginExitoso)) {
+				JOptionPane.showMessageDialog(Jframe, "El usuario fue dado de baja. Contactese con un administrador.", "Ha ocurrido un error!",
+						JOptionPane.WARNING_MESSAGE);	
+		} else {
+			JOptionPane.showMessageDialog(Jframe, "Verifique los datos ingresados.", "Ha ocurrido un error!",
+					JOptionPane.WARNING_MESSAGE);	
+		} 
 	}
 	
 	private static void accionCancelar() {

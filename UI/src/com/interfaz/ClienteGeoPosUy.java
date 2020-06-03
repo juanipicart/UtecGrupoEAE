@@ -65,11 +65,11 @@ public static Usuario buscarUsuarioPorUsername(String username) throws Exception
 				 documento,  estado,  rol,  tipoDoc,  correo,  zona, departamento, localidad);
 	}
 	
-	public static boolean existeUsuario(String usuario) throws Exception {
+	/*public static boolean existeUsuario(String usuario) throws Exception {
 
 		UsuarioBeanRemote usuarioBeanRemote = EJBLocator.getInstance().lookup(UsuarioBeanRemote.class);
 		return usuarioBeanRemote.ExisteUsuario(usuario);
-	}
+	}*/
 	
 
 	public static boolean darDeBajaUsuario(String username) throws NamingException {

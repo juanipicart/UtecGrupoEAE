@@ -20,7 +20,7 @@ public class LoginDaoImpl implements LoginDao {
 	public boolean validarLogueo(String username, String password) throws ProblemasNivelSQLException, NoSeRealizoOperacionException {
 		
 		String VALIDAR_LOGIN = "SELECT * FROM USUARIOS where usuario = ? AND password = ?"; 
-		
+		boolean loginValido = false;
 		int i;
 		
 		// se prepara el insert
@@ -40,13 +40,15 @@ public class LoginDaoImpl implements LoginDao {
 		
 		// ejecutamos y controlamos retorno
 		if ( i == 0) {
-			throw new NoSeRealizoOperacionException("Login fallido");
+			System.out.println("Datos invalidos para login");	
 		} else if (i < 0) {
 			throw new  ProblemasNivelSQLException("Login fallido");
-		} else
+		} else {
 			System.out.println("Datos validos para login");	
-		return true;
+		loginValido = true;
+		}
 		
+		return loginValido;
 	}
 	
 }
