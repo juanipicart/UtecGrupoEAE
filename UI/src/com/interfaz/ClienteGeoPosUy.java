@@ -35,8 +35,8 @@ public class ClienteGeoPosUy {
 
 	
 
-	/*** Operaciones sobre Usuarios 
-	 * @param long1 ***/
+	// Operaciones sobre Usuarios 
+	 
 	
 	public static boolean registrarUsuario(String username, String nombre, String apellido, String direccion, long rol, long localidad, 
 			long zona, long estado, long depto, String correo, String password, long tipodoc, String documento) throws Exception {
@@ -51,7 +51,7 @@ public class ClienteGeoPosUy {
 		return usuarioBeanRemote.buscarUsuarioPorDocumento(codTipoDoc, documento);
 	}
 	
-public static Usuario buscarUsuarioPorUsername(String username) throws Exception {
+	public static Usuario buscarUsuarioPorUsername(String username) throws Exception {
 		
 		UsuarioBeanRemote usuarioBeanRemote = EJBLocator.getInstance().lookup(UsuarioBeanRemote.class);
 		return usuarioBeanRemote.buscarUsuarioPorUsername(username);
@@ -65,17 +65,16 @@ public static Usuario buscarUsuarioPorUsername(String username) throws Exception
 				 documento,  estado,  rol,  tipoDoc,  correo,  zona, departamento, localidad);
 	}
 	
-	/*public static boolean existeUsuario(String usuario) throws Exception {
-
-		UsuarioBeanRemote usuarioBeanRemote = EJBLocator.getInstance().lookup(UsuarioBeanRemote.class);
-		return usuarioBeanRemote.ExisteUsuario(usuario);
-	}*/
-	
-
 	public static boolean darDeBajaUsuario(String username) throws NamingException {
 
 		UsuarioBeanRemote usuarioBeanRemote = EJBLocator.getInstance().lookup(UsuarioBeanRemote.class);
 		return usuarioBeanRemote.eliminarUsuario(username);		
+	}
+
+	public static boolean validarCedula(String cedula) throws NamingException {
+		
+		UsuarioBeanRemote usuarioBeanRemote = EJBLocator.getInstance().lookup(UsuarioBeanRemote.class);
+		return usuarioBeanRemote.validarCedula(cedula);	
 	}
 	
 	public static boolean validarLogin(String username, String password) throws Exception {

@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -362,6 +363,27 @@ public class FrameAltaUsuario implements ActionListener {
 
 			return; }
 		
+		//Verifico el formato de la cédula
+			
+		if (tipoDoc.equals("CI")) {
+			try {
+				if (!fieldDoc.matches("[0-9]+"))  {
+					JOptionPane.showMessageDialog(frame, "Ingrese la cédula sin puntos ni guiones", "Cédula inválida!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				} else if (fieldDoc.length()>8 || fieldDoc.length()<7 || !ClienteGeoPosUy.validarCedula(fieldDoc)) {
+					JOptionPane.showMessageDialog(frame, "La cédula ingresada no es válida", "Cédula inválida!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+			} catch (HeadlessException e) {
+				e.printStackTrace();
+			} catch (NamingException e) {
+				e.printStackTrace();
+			} 
+		} 
+				
+		
 		String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 		        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     
@@ -447,8 +469,7 @@ public class FrameAltaUsuario implements ActionListener {
 
 		return combo;
 	}
-	
-	
+		
 	private JComboBox<String> cargarComboLocalidad(String depto) throws Exception {
 		
 		mapLocs = new HashMap<String,Long >();

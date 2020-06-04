@@ -22,8 +22,8 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	
 	DBConector bd = DBConector.getinstance();
 	
-	private static final String crearUsuario = "INSERT INTO USUARIOS (ID_USER,USUARIO,NOMBRE,APELLIDO,DIRECCION,ROL,LOCALIDAD,ZONA,ESTADO,DEPARTAMENTO,MAIL,PASSWORD,TIPO_DOC,DOCUMENTO) "
-			+ "VALUES (ID_USER_SEQ.NEXTVAL,UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?))";
+	private static final String crearUsuario = "INSERT INTO USUARIOS (USUARIO,NOMBRE,APELLIDO,DIRECCION,ROL,LOCALIDAD,ZONA,ESTADO,DEPARTAMENTO,MAIL,PASSWORD,TIPO_DOC,DOCUMENTO) "
+			+ "VALUES (UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?))";
 	
 	
 	
@@ -131,7 +131,6 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		}
 	}
 	
-	
 	@Override
 	public Usuario buscarUsuarioPorUsername(String username) throws ProblemasNivelSQLException, NoSeRealizoOperacionException {
 		final String selectUsuarioPorUsername = "SELECT * FROM USUARIOS WHERE USUARIO = UPPER(?)";
@@ -197,10 +196,6 @@ public class UsuarioDaoImpl implements UsuarioDao {
 			
 		}
 	}
-
-
-
-
 
 @Override
 	public boolean eliminarUsuario(String username) throws ProblemasNivelSQLException, NoSeRealizoOperacionException {
@@ -301,50 +296,34 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		return list;
 	}
 
-
-
-
-
-	
-
-
-	/*
+	public boolean validarCedula(String cedula) {
+		boolean cedulaValida = false;
+		int value = 0;
+		int digitoVerificador = 0;
 		
-		private static Usuario getUbicacionDesdeId(ResultSet resultado) throws ProblemasNivelSQLException {
-			
-			try {
-				Long id_ubicacion = resultado.getLong("ID_UBICACION");
-				Long id_localidad = resultado.getLong("ID_LOCALIDAD");
-				String id_departamento = resultado.getString("ID_DEPARTAMENTO");
-				Long id_zona = resultado.getLong("ID_ZONA");
-
-				
-				Ubicacion ubi = new Ubicacion(id_ubicacion, id_localidad, id_departamento, id_zona);
-				
-				return user; 
-			} catch (SQLException e) {
-				throw new ProblemasNivelSQLException("realizar operación");
-				
-			}
-			
-			
-}
+		//Si la cedula es de largo 7, le agrego un cero al principio
+		if (cedula.length() == 7) {
+			cedula = '0' + cedula;
+		}
 		
-private static Usuario getLocalidadPorId(ResultSet resultado) throws ProblemasNivelSQLException {
-			
-			try {
-				Long id_ubicacion = resultado.getLong("ID_UBICACION");
-				Long id_localidad = resultado.getLong("ID_LOCALIDAD");
-				String id_departamento = resultado.getString("ID_DEPARTAMENTO");
-				Long id_zona = resultado.getLong("ID_ZONA");
-
-				
-				Ubicacion ubi = new Ubicacion(id_ubicacion, id_localidad, id_departamento, id_zona);
-				
-				return user; 
-			} catch (SQLException e) {
-				throw new ProblemasNivelSQLException("realizar operación");
-				
-			}
-}*/
+		//Separo la cedula por números y los agrego a un array
+		String[] digitos = cedula.split("");
+		String[] validador = "2987634".split("");
+		
+		for (int i = 0; i < cedula.length() - 1; i++) {
+			value = value + Integer.parseInt(digitos[i])*Integer.parseInt(validador[i]); 
+		}
+		
+		if (value % 10 == 0) {
+			digitoVerificador = 0;
+		} else {
+			digitoVerificador = 10 - (value % 10);
+		}
+		
+		if (Integer.parseInt(digitos[cedula.length() - 1]) == digitoVerificador) {
+			cedulaValida = true;
+		}
+		
+		return cedulaValida;
+	}
 }

@@ -28,5 +28,6 @@ public interface UsuarioBeanRemote {
 	public List<TipoDocumento> retornarTiposDocumento();
 	public List<Rol> retornarRoles();
 	public List<Estado> retornarEstado();
+	public boolean validarCedula(String cedula);
 
 }

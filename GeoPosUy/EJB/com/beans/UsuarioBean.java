@@ -135,5 +135,9 @@ public class UsuarioBean implements UsuarioBeanRemote {
 		return servicio.obtenerEstados();
 	}
 
+	@Override
+	public boolean validarCedula(String cedula) {
+		return servicio.validarCedula(cedula);
+	}
 	
 }
