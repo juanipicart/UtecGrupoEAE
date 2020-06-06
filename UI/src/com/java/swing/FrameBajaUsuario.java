@@ -203,7 +203,17 @@ import com.interfaz.ClienteGeoPosUy;
 
 				return;			
 			}
-				
+			
+			int dialogResult = 0;
+			try {
+				dialogResult = JOptionPane.showConfirmDialog(null, "Se eliminará el usuario: " + usuarioAModificar.getNombre() + " " + usuarioAModificar.getApellido() + ". Desea continuar?");
+			} catch (HeadlessException e1) {
+				e1.printStackTrace();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			
+			if (dialogResult == JOptionPane.YES_OPTION)	{
 			boolean eliminado = false;
 			try {
 				eliminado = ClienteGeoPosUy.darDeBajaUsuario(usuarioAModificar.getUsuario());
@@ -224,7 +234,7 @@ import com.interfaz.ClienteGeoPosUy;
 				JOptionPane.showMessageDialog(frame, "Hubo un error al eliminar. Intente nuevamente",
 						"Error al registrar!", JOptionPane.ERROR_MESSAGE);
 			}
-			
+			}
 				
 		}		
 	        	
