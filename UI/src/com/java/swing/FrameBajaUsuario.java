@@ -49,9 +49,11 @@ import com.interfaz.ClienteGeoPosUy;
 		private JButton buttonBuscar;
 		private JButton buttonCancelar;
 		
+		private Usuario usuario;
+		
 		HashMap<String, Long> mapTiposDoc;
 
-		public FrameBajaUsuario(JFrame framePadre) {
+		public FrameBajaUsuario(JFrame framePadre, Usuario usuario) {
 			
 			this.labelUsername = new JLabel("Nombre de usuario:");
 			this.labelDocumento = new JLabel("Documento:");
@@ -69,10 +71,11 @@ import com.interfaz.ClienteGeoPosUy;
 			this.buttonBuscar = buttonBuscar;
 			this.buttonCancelar = buttonCancelar;
 
-			this.initializeFrame(framePadre);
+			this.initializeFrame(framePadre, usuario);
+			this.usuario = usuario;
 		}
 		
-		private void initializeFrame(JFrame framePadre) {
+		private void initializeFrame(JFrame framePadre, Usuario usuario) {
 
 			JFrame frame = new JFrame("Buscar usuario a dar de baja");
 			frame.setSize(600, 400);
@@ -183,6 +186,7 @@ import com.interfaz.ClienteGeoPosUy;
 					
 			Usuario usuarioAModificar = null;
 			
+			//Busco el usuario según el criterio ingresado
 			if (fieldUsername.equals("")) {
 				try {
 					usuarioAModificar = ClienteGeoPosUy.buscarUsuarioPorDocumento(mapTiposDoc.get(tipoDoc), fieldDocumento);
@@ -197,6 +201,7 @@ import com.interfaz.ClienteGeoPosUy;
 				}
 			}
 			
+			//Si no se encontró un usuario, muestro un mensaje de error
 			if(usuarioAModificar == null) {
 				JOptionPane.showMessageDialog(frame, "No se encontró un usuario",
 						"Usuario inexistente!", JOptionPane.WARNING_MESSAGE);
@@ -204,6 +209,15 @@ import com.interfaz.ClienteGeoPosUy;
 				return;			
 			}
 			
+			//Chequeo que el usuario a dar de baja no sea el del usuario logueado
+			if(usuario.getUsuario().equalsIgnoreCase(fieldUsername)) {
+				JOptionPane.showMessageDialog(frame, "No puedes dar de baja tu propio usuario",
+						"Acción inválida!", JOptionPane.WARNING_MESSAGE);
+
+				return;	
+			}
+			
+			//Muestro un mensaje de confirmación
 			int dialogResult = 0;
 			try {
 				dialogResult = JOptionPane.showConfirmDialog(null, "Se eliminará el usuario: " + usuarioAModificar.getNombre() + " " + usuarioAModificar.getApellido() + ". Desea continuar?");
@@ -213,6 +227,7 @@ import com.interfaz.ClienteGeoPosUy;
 				e1.printStackTrace();
 			}
 			
+			//Si confirmo la acción elimino el usuario
 			if (dialogResult == JOptionPane.YES_OPTION)	{
 			boolean eliminado = false;
 			try {

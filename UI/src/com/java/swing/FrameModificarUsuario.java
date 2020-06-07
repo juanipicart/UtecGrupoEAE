@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -357,6 +358,24 @@ public class FrameModificarUsuario implements ActionListener {
 
 			return; }
 		
+		if (tipoDoc.equals("CI")) {
+			try {
+				if (!fieldDoc.matches("[0-9]+"))  {
+					JOptionPane.showMessageDialog(frame, "Ingrese la cédula sin puntos ni guiones", "Cédula inválida!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				} else if (fieldDoc.length()>8 || fieldDoc.length()<7 || !ClienteGeoPosUy.validarCedula(fieldDoc)) {
+					JOptionPane.showMessageDialog(frame, "La cédula ingresada no es válida", "Cédula inválida!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+			} catch (HeadlessException e) {
+				e.printStackTrace();
+			} catch (NamingException e) {
+				e.printStackTrace();
+			} 
+		} 
+		
 		String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 		        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     
@@ -372,82 +391,44 @@ public class FrameModificarUsuario implements ActionListener {
 			return;
 		}
 		
+		//Chequeo si modifique los campos tipo y numero de documento.
+		
+		System.out.println(user.getDocumento().equalsIgnoreCase(fieldDoc));
+		System.out.println((user.getTipodoc()  == mapTiposDoc.get(tipoDoc)));
+		
+		if (!(user.getDocumento().equalsIgnoreCase(fieldDoc)) || !(user.getTipodoc()  == mapTiposDoc.get(tipoDoc))) {
+		
+		//Si los modifique me fijo si ya existe un usuario con esos datos	
+		Usuario usuarioExiste = null;
 		try {
-			
-				
-			//if(!existeUsuario) {
+			usuarioExiste = ClienteGeoPosUy.buscarUsuarioPorDocumento(mapTiposDoc.get(tipoDoc), fieldDoc);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+
+		if (!(usuarioExiste == null) ) {
+			JOptionPane.showMessageDialog(frame, "Ya existe un cliente registrado con ese documento.",
+					"Cliente Existente!", JOptionPane.WARNING_MESSAGE);
+
+			return;
+		}		
+	}
+		try {
 			boolean correctamente = ClienteGeoPosUy.modificarUsuario(fieldUsername, fieldNombre, fieldApellido, fieldDireccion, fieldPassword, fieldDoc , mapEstados.get(estado), mapRoles.get(rol), mapTiposDoc.get(tipoDoc), fieldCorreo, mapZonas.get(zona), mapDeptos.get(depto), mapLocs.get(localidad));
 			if(correctamente ) {
 				JOptionPane.showMessageDialog(frame, "Usuario modificado correctamente", "Modificación completada!",
 						JOptionPane.WARNING_MESSAGE);
-			}else {
+				this.frame.dispose();
+			} else {
 				JOptionPane.showMessageDialog(frame, "La modificación no ha sido posible", "Ha ocurrido un error!",
 						JOptionPane.WARNING_MESSAGE);
 			}
-				//}
+				
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
 		
-		
-		//llamo al bean remote para mandarle los parametros
-
-		
-		
-		}
-
-	
-
-		// Validamos si el formato del mail es valido
-
-	/*public boolean existeUsuario(String username) {
-		boolean existe = false;
-		try{
-			existe = ClienteGeoPosUy.existeUsuario(username);
-		} catch (Exception e){
-			JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
-					"Error de conexión!", JOptionPane.WARNING_MESSAGE);
-		}
-		
-		if (existe) {
-			JOptionPane.showMessageDialog(frame, "Ya existe un usuario con ese username",
-					"Usuario existente!", JOptionPane.WARNING_MESSAGE);
-		}
-		return existe;		
-	}*/
-		
-
-
-		/*// Valiamos ahora, que no exista un cliente con dicha CI
-		boolean existe = ControladorClientes.existeCliente(fieldCi);
-
-		if (existe) {
-			JOptionPane.showMessageDialog(frame, "El cliente con dicha CI ya se ecuentra registrado.",
-					"Cliente Existente!", JOptionPane.WARNING_MESSAGE);
-
-			return;
-		}*/
-
-		// Si estamos aquí,..quiere decir que no hay errores. Almacenamos el
-		// cliente y volvemos al menu
-		/*boolean almacenado = ControladorClientes.ingresarNuevoCliente(fieldNombre, fieldApellido, fieldCi);
-
-		if (almacenado) {
-			JOptionPane.showMessageDialog(frame, "El cliente ha sido registrado con éxito.",
-					"Cliente Registrado!", JOptionPane.INFORMATION_MESSAGE);
-			
-			// cerramos la ventanta
-			this.frame.dispose();
-
-			
-		}
-		else{
-			JOptionPane.showMessageDialog(frame, "Hubo un error al almacenar. Intente nuevamente más tarde",
-					"Error al registrar!", JOptionPane.ERROR_MESSAGE);
-		}
-
-	}*/
-
 	private void accionCancelar() {
 		// si se cancela, se eliminar la ventana
 		this.frame.dispose();

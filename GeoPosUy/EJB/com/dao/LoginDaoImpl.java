@@ -29,7 +29,7 @@ public class LoginDaoImpl implements LoginDao {
 		//El asignar una variable puede lanzar una excepcion de SQL
 		try {
 			bd.getPrepStmt().setString(1, username.toUpperCase());
-			bd.getPrepStmt().setString(2, password.toUpperCase());
+			bd.getPrepStmt().setString(2, password);
 			
 			
 		} catch (SQLException e) {

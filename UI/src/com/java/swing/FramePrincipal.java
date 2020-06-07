@@ -102,7 +102,7 @@ public class FramePrincipal {
 	            @Override
 	            public void actionPerformed(ActionEvent event) {
 	                
-	            	new FrameBajaUsuario(frame);
+	            	new FrameBajaUsuario(frame, usuario);
 	            	
 	            }
 	        });
@@ -302,7 +302,7 @@ public class FramePrincipal {
             @Override
             public void actionPerformed(ActionEvent event) {
                 
-            	new FrameBajaUsuario(frame);          	
+            	new FrameBajaUsuario(frame, usuario);          	
             	
             	
             }

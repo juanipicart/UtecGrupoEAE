@@ -23,7 +23,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	DBConector bd = DBConector.getinstance();
 	
 	private static final String crearUsuario = "INSERT INTO USUARIOS (USUARIO,NOMBRE,APELLIDO,DIRECCION,ROL,LOCALIDAD,ZONA,ESTADO,DEPARTAMENTO,MAIL,PASSWORD,TIPO_DOC,DOCUMENTO) "
-			+ "VALUES (UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?))";
+			+ "VALUES (UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),UPPER(?),?,UPPER(?),UPPER(?))";
 	
 	
 	
