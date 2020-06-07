@@ -44,11 +44,11 @@ public class UbicacionesBean implements UbicacionesBeanRemote {
 		return this.daoLoc.obtenerCodLocalidad();
 	}
 	
-	/*@Override
-	public List<CodLocalidad> retornarLocalidadesPorDepto(String depto) {
+	@Override
+	public List<CodLocalidad> retornarLocalidadesPorDepto(long depto) {
 		this.daoLoc = new CodLocalidadesDaoImpl();
 		return this.daoLoc.obtenerLocalidadesPorDepto(depto);
-	}*/
+	}
 
 	@Override
 	public List<CodZona> retornarZonas() {

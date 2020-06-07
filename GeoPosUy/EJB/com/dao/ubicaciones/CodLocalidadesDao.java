@@ -15,6 +15,6 @@ public interface CodLocalidadesDao {
 	//public List<CodLocalidad> obtenerCodLocalidadLike(String descLocalidad);
 	//public List<CodLocalidad> obtenerCodLocalidad(long idLocalidad);
 	public List<CodLocalidad> obtenerCodLocalidad();
-	//public List<CodLocalidad> obtenerLocalidadesPorDepto(String depto);
+	public List<CodLocalidad> obtenerLocalidadesPorDepto(long depto);
 	
 }

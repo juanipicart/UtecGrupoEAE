@@ -11,6 +11,7 @@ import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -222,6 +223,17 @@ public class FrameAltaUsuario implements ActionListener {
 			constraints.gridx = 1;
 			constraints.gridy = 8;
 			this.comboDepto = cargarComboDepartamento();
+			this.comboDepto.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+    	   
+			try {
+				cargarComboLocalidad((String) comboDepto.getSelectedItem());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+       }
+			});
 			nuevoUsuarioPanel.add(this.comboDepto, constraints);
 			
 		} catch (Exception e) {
@@ -236,9 +248,8 @@ public class FrameAltaUsuario implements ActionListener {
 			
 			constraints.gridx = 1;
 			constraints.gridy = 9;
-			if (!(comboDepto.getSelectedItem()== null)) {  
-				this.comboLocalidad = cargarComboLocalidad(depto);
-			}
+			this.comboLocalidad = new JComboBox<String>();
+			this.comboLocalidad.addItem("Seleccione una localidad");
 			nuevoUsuarioPanel.add(this.comboLocalidad, constraints);
 			
 		} catch (Exception e) {
@@ -332,7 +343,7 @@ public class FrameAltaUsuario implements ActionListener {
 			this.accionIngresar();
 		}	
 	}
-	
+
 
 
 	private void accionIngresar() {
@@ -362,6 +373,12 @@ public class FrameAltaUsuario implements ActionListener {
 					JOptionPane.WARNING_MESSAGE);
 
 			return; }
+		
+		//Verifico que haya seleccionado los combos
+		if (comboDepto.getSelectedIndex() == 0) {
+			JOptionPane.showMessageDialog(frame, "Seleccione un departamento", "Datos incompletos!",
+					JOptionPane.WARNING_MESSAGE);
+		}
 		
 		//Verifico el formato de la cédula
 			
@@ -470,25 +487,22 @@ public class FrameAltaUsuario implements ActionListener {
 		return combo;
 	}
 		
-	private JComboBox<String> cargarComboLocalidad(String depto) throws Exception {
+	private void cargarComboLocalidad(String depto) throws Exception {
 		
 		mapLocs = new HashMap<String,Long >();
 		List<CodLocalidad> localidades = new ArrayList<CodLocalidad>();
 		
 		try {
-			localidades = ClienteGeoPosUy.obtenerLocalidades();
+			localidades = ClienteGeoPosUy.obtenerLocalidadesPorDepto(mapDeptos.get(depto));
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
-
-		JComboBox<String> combo = new JComboBox<>();
-
+		comboLocalidad.removeAllItems();
 		for (CodLocalidad localidad : localidades) {
-			combo.addItem(localidad.getDescCodLocalidad());
+			comboLocalidad.addItem(localidad.getDescCodLocalidad());
 			mapLocs.put(localidad.getDescCodLocalidad(),  localidad.getIdCodLocalidad());
 		}
 
-		return combo;
 	}
 	
 	private JComboBox<String> cargarComboDepartamento() throws Exception {
@@ -504,6 +518,7 @@ public class FrameAltaUsuario implements ActionListener {
 
 		JComboBox<String> combo = new JComboBox<>();
 
+		combo.addItem("Seleccione un departamento");
 		for (CodDepartamento dep : deptos) {
 			combo.addItem(dep.getDescCodDepartamento());
 			mapDeptos.put(dep.getDescCodDepartamento(),  dep.getIdCodDepartamento());
@@ -522,6 +537,7 @@ public class FrameAltaUsuario implements ActionListener {
 
 		JComboBox<String> combo = new JComboBox<>();
 
+		combo.addItem("Seleccione una opción");
 		for (TipoDocumento tipo : tiposDoc) {
 			combo.addItem(tipo.getDescripcion());
 			mapTiposDoc.put(tipo.getDescripcion(),  tipo.getID_TIPO_DOC());

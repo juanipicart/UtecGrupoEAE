@@ -111,11 +111,11 @@ public class ClienteGeoPosUy {
 		return ubicaciones.retornarLocalidades();
 	}
 
-	/*public static List<CodLocalidad> obtenerLocalidadesPorDepto(String depto) throws Exception {
+	public static List<CodLocalidad> obtenerLocalidadesPorDepto(long depto) throws Exception {
 
 		UbicacionesBeanRemote ubicaciones = EJBLocator.getInstance().lookup(UbicacionesBeanRemote.class);
 		return ubicaciones.retornarLocalidadesPorDepto(depto);
-	}*/
+	}
 	
 	public static List<CodDepartamento> obtenerDepartamentos() throws Exception {
 
