@@ -1,5 +1,7 @@
 package com.java.swing;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -12,8 +14,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.clases.Fenomeno;
 import com.exceptions.NoSeRealizoOperacionException;
 import com.exceptions.ProblemasNivelSQLException;
 import com.interfaz.ClienteGeoPosUy;
@@ -36,34 +40,6 @@ public class FrameModificarFenomeno implements ActionListener {
 	/** Atributos de TexField */
 	private JTextField textDescripcion;
 	private JTextField textCodigo;
-	
-	public JTextField getTextCodigo() {
-		return textCodigo;
-	}
-	public JTextField getTextDescripcion() {
-		return textDescripcion;
-	}
-
-	public void setTextDescripcion(JTextField textDescripcion) {
-		this.textDescripcion = textDescripcion;
-	}
-
-	public JTextField getTextNombre() {
-		return textNombre;
-	}
-
-	public void setTextNombre(JTextField textNombre) {
-		this.textNombre = textNombre;
-	}
-
-	public JTextField getTextTelefono() {
-		return textTelefono;
-	}
-
-	public void setTextTelefono(JTextField textTelefono) {
-		this.textTelefono = textTelefono;
-	}
-
 	private JTextField textNombre;
 	private JTextField textTelefono;
 		
@@ -71,10 +47,11 @@ public class FrameModificarFenomeno implements ActionListener {
 	private JButton buttonConfirmar;
 	private JButton buttonCancelar;
 	
-	String fieldCodigo;
+	private Fenomeno fenom;
 
-	public FrameModificarFenomeno(JFrame framePadre, String fieldCodigo) {
+	public FrameModificarFenomeno(JFrame framePadre, Fenomeno fenomeno) {
 
+		this.fenom = fenomeno;
 		this.labelDescripcion = new JLabel("(*) Descripción:");
 		this.labelNombre = new JLabel("(*) Nombre:");
 		this.labelTelefono = new JLabel("(*) Teléfono:");
@@ -94,12 +71,10 @@ public class FrameModificarFenomeno implements ActionListener {
 		this.buttonConfirmar = buttonConfirmar;
 		this.buttonCancelar = buttonCancelar;
 
-		this.initializeFrame(framePadre);
-		
-		this.fieldCodigo = fieldCodigo;
+		this.initializeFrame(framePadre, fenom);	
 	}
 	
-	private void initializeFrame(JFrame framePadre) {
+	private void initializeFrame(JFrame framePadre, Fenomeno fenomeno) {
 
 		JFrame frame = new JFrame("Modificar Fenómeno");
 		frame.setSize(600, 400);
@@ -108,6 +83,7 @@ public class FrameModificarFenomeno implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		JPanel buscarFenomenoPanel = new JPanel(new GridBagLayout());
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
@@ -119,6 +95,7 @@ public class FrameModificarFenomeno implements ActionListener {
 		
 		constraints.gridx = 1;
 		textCodigo.setEditable(false);
+		textCodigo.setText(fenom.getCodigo());
 		buscarFenomenoPanel.add(this.textCodigo, constraints);
 		
 		
@@ -128,6 +105,7 @@ public class FrameModificarFenomeno implements ActionListener {
 		
 		
 		constraints.gridx = 1;
+		textNombre.setText(fenom.getNombre());
 		buscarFenomenoPanel.add(this.textNombre, constraints);
 
 		constraints.gridx = 0;
@@ -135,6 +113,7 @@ public class FrameModificarFenomeno implements ActionListener {
 		buscarFenomenoPanel.add(this.labelDescripcion, constraints);
 
 		constraints.gridx = 1;
+		textDescripcion.setText(fenom.getDescripcion());
 		buscarFenomenoPanel.add(this.textDescripcion, constraints);
 
 		constraints.gridx = 0;
@@ -142,24 +121,17 @@ public class FrameModificarFenomeno implements ActionListener {
 		buscarFenomenoPanel.add(this.labelTelefono, constraints);
 
 		constraints.gridx = 1;
+		textTelefono.setText(fenom.getContacto_emergencia());
 		buscarFenomenoPanel.add(this.textTelefono, constraints);
 
-		constraints.gridx = 0;
-		constraints.gridy = 4;
-		constraints.gridwidth = 5;
-		constraints.anchor = GridBagConstraints.CENTER;
-		buscarFenomenoPanel.add(buttonConfirmar, constraints);
-
-		constraints.gridx = 0;
-		constraints.gridy = 5;
-		constraints.gridwidth = 6;
-		constraints.anchor = GridBagConstraints.CENTER;
-		buscarFenomenoPanel.add(buttonCancelar, constraints);
+		buttonPanel.add(buttonConfirmar);
+		buttonPanel.add(buttonCancelar);
 
 		buscarFenomenoPanel
 				.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos del fenómeno"));
 
-		frame.add(buscarFenomenoPanel);
+		frame.add(buscarFenomenoPanel, BorderLayout.NORTH);
+		frame.add(buttonPanel, BorderLayout.SOUTH);
 
 		frame.pack();
 		frame.setVisible(true);
@@ -218,17 +190,22 @@ public class FrameModificarFenomeno implements ActionListener {
 		
 		//Controlo que el fenomeno no exista ya
 		
-		boolean existe;
+		boolean existe = false;
+		System.out.println(fenom.getNombre());
+		System.out.println(fieldNombre);
+		boolean cambioNombre = !(fenom.getNombre().equalsIgnoreCase(fieldNombre));
 		
-		try{
-			existe = ClienteGeoPosUy.ExisteFenomeno(fieldNombre);
-		} catch (Exception e){
-			JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
+		if (cambioNombre) {
+			try{
+				existe = ClienteGeoPosUy.ExisteFenomeno(fieldNombre);
+			} catch (Exception e){
+				JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
 					"Error de conexión!", JOptionPane.WARNING_MESSAGE);
-			return;
+				return;
+			}
 		}
 		
-		if (existe) {
+		if (existe)  {
 			JOptionPane.showMessageDialog(frame, "Ya existe un fenómeno con ese nombre",
 					"Fenómeno existente!", JOptionPane.WARNING_MESSAGE);
 
@@ -236,7 +213,7 @@ public class FrameModificarFenomeno implements ActionListener {
 		}
 		
 		try {
-			if (ClienteGeoPosUy.ExisteObservacion(fieldCodigo)) {
+			if (ClienteGeoPosUy.ExisteObservacion(fenom.getCodigo())) {
 				JOptionPane.showMessageDialog(frame, "El fenómeno no se puede modificar, tiene observaciones asociadas",
 						"Error!", JOptionPane.WARNING_MESSAGE);
 
@@ -251,7 +228,7 @@ public class FrameModificarFenomeno implements ActionListener {
 		boolean almacenado = false;
 		
 		try {
-			almacenado = ClienteGeoPosUy.modificarFenomeno(fieldCodigo,fieldNombre, fieldDescripcion, fieldTelefono);
+			almacenado = ClienteGeoPosUy.modificarFenomeno(fenom.getCodigo(),fieldNombre, fieldDescripcion, fieldTelefono);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

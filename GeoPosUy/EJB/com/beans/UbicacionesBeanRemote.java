@@ -21,5 +21,5 @@ public interface UbicacionesBeanRemote {
 	// devuelve un objeto tipo ubicacion con el ID pasado
 	/*public UbicacionesObj devolverObjUbicacion( long idUbicacion);*/
 	boolean holaMundo();
-	//List<CodLocalidad> retornarLocalidadesPorDepto(String depto);
+	public List<CodLocalidad> retornarLocalidadesPorDepto(long depto);
 }

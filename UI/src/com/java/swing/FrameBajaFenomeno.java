@@ -1,5 +1,7 @@
 package com.java.swing;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
@@ -66,6 +68,7 @@ public class FrameBajaFenomeno implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		JPanel eliminarFenomenoPanel = new JPanel(new GridBagLayout());
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
@@ -78,22 +81,14 @@ public class FrameBajaFenomeno implements ActionListener {
 		constraints.gridx = 1;
 		eliminarFenomenoPanel.add(this.textCodigo, constraints);
 
-		constraints.gridx = 0;
-		constraints.gridy = 1;
-		constraints.gridwidth = 5;
-		constraints.anchor = GridBagConstraints.CENTER;
-		eliminarFenomenoPanel.add(buttonConfirmar, constraints);
-
-		constraints.gridx = 0;
-		constraints.gridy = 2;
-		constraints.gridwidth = 6;
-		constraints.anchor = GridBagConstraints.CENTER;
-		eliminarFenomenoPanel.add(buttonCancelar, constraints);
+		buttonPanel.add(buttonConfirmar);
+		buttonPanel.add(buttonCancelar);
 
 		eliminarFenomenoPanel
 				.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Ingrese el código del fenómeno que desea eliminar"));
 
-		frame.add(eliminarFenomenoPanel);
+		frame.add(eliminarFenomenoPanel, BorderLayout.NORTH);
+		frame.add(buttonPanel, BorderLayout.SOUTH);
 
 		frame.pack();
 		frame.setVisible(true);
@@ -164,13 +159,20 @@ public class FrameBajaFenomeno implements ActionListener {
 			e1.printStackTrace();
 		} 
 	
+		int dialogResult = 0;
+		try {
+			dialogResult = JOptionPane.showConfirmDialog(null, "Se eliminará el fenómeno: " + ClienteGeoPosUy.BuscarFenomenoPorCodigo(fieldCodigo).getNombre() + ". Desea continuar?");
+		} catch (HeadlessException e1) {
+			e1.printStackTrace();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 		
-		
+		if (dialogResult == JOptionPane.YES_OPTION) {
 		boolean eliminado = false;
 		try {
 			eliminado = ClienteGeoPosUy.EliminarFenomeno(fieldCodigo);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -187,7 +189,7 @@ public class FrameBajaFenomeno implements ActionListener {
 			JOptionPane.showMessageDialog(frameBaja, "Hubo un error al eliminar. Intente nuevamente",
 					"Error al registrar!", JOptionPane.ERROR_MESSAGE);
 		}
-		
+		}
 			
 	}		
         	

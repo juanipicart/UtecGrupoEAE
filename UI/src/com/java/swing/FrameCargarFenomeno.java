@@ -27,7 +27,7 @@ public class FrameCargarFenomeno implements ActionListener {
 	}
 	
 	/** Frame de la ventana */
-	public JFrame frameModif;
+	public JFrame frame;
 
 	/** Atributos de labels */
 	private JLabel labelCodigo;
@@ -102,7 +102,7 @@ public class FrameCargarFenomeno implements ActionListener {
 		frame.pack();
 		frame.setVisible(true);
 
-		this.frameModif = frame;
+		this.frame = frame;
 
 	}
 	
@@ -127,69 +127,38 @@ public class FrameCargarFenomeno implements ActionListener {
 
 		// Si es vacío, mostramos una ventana de mensaje
 		if (fieldCodigo.equals("")) {
-			JOptionPane.showMessageDialog(frameModif, "Debe ingresar el código del fenómeno", "Datos incompletos!",
+			JOptionPane.showMessageDialog(frame, "Debe ingresar el código del fenómeno", "Datos incompletos!",
 					JOptionPane.WARNING_MESSAGE);
 
 			return; }
 		
 		// Controlo el maximo de caracteres
 		if (fieldCodigo.length() > 5) {
-			JOptionPane.showMessageDialog(frameModif, "El código puede contener máximo 5 caracteres", "Datos inválidos!",
+			JOptionPane.showMessageDialog(frame, "El código puede contener máximo 5 caracteres", "Datos inválidos!",
 					JOptionPane.WARNING_MESSAGE);
 			return;
 		}
 		
-		
-		String desc = null;
-		String nomb = null;
-		String tel = null;
+		Fenomeno fenomeno = null;
 		try {
-			if (ClienteGeoPosUy.BuscarFenomenoPorCodigo(fieldCodigo) == null) {
-				JOptionPane.showMessageDialog(frameModif, "El fenómeno no existe", "Datos inválidos!",
-						JOptionPane.WARNING_MESSAGE);
-				return;
-			} else {
-				Fenomeno fenomeno = ClienteGeoPosUy.BuscarFenomenoPorCodigo(fieldCodigo);
-				desc = fenomeno.getDescripcion();
-				nomb = fenomeno.getNombre();
-				tel = fenomeno.getContacto_emergencia();
-				
-			}
-		} catch (HeadlessException e) {
-			e.printStackTrace();
-		} catch (NamingException e) {
-			e.printStackTrace();
+			fenomeno = ClienteGeoPosUy.BuscarFenomenoPorCodigo(fieldCodigo);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
-		
-		FrameModificarFenomeno frameCargar = new FrameModificarFenomeno(frameModif, fieldCodigo);
-		
-		{	
-			frameCargar.getTextDescripcion().setText(desc);
-			frameCargar.getTextNombre().setText(nomb);
-			frameCargar.getTextTelefono().setText(tel);
-			frameCargar.getTextCodigo().setText(fieldCodigo);
-        	  
 		}
-         
-         
-            	
-            	
-         }
+	
+		if (fenomeno == null) {
+				JOptionPane.showMessageDialog(frame, "El fenómeno no existe", "Datos inválidos!",
+						JOptionPane.WARNING_MESSAGE);
+				return;
+		} else {
+				new FrameModificarFenomeno(frame, fenomeno);		
+	}
+
+ }
         
- 	
-	public JTextField getTextCodigo() {
-		return textCodigo;
-	}
-
-	public void setTextCodigo(JTextField textCodigo) {
-		this.textCodigo = textCodigo;
-	}
-
 	private void accionCancelar() {
 		// si se cancela, se eliminar la ventana
-		this.frameModif.dispose();
+		this.frame.dispose();
 
 	}
 }
