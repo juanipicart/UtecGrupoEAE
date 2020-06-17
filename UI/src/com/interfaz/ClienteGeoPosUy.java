@@ -2,10 +2,13 @@ package com.interfaz;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 
 import com.beans.FenomenosBeanRemote;
 import com.beans.LoginBeanRemote;
@@ -13,6 +16,7 @@ import com.beans.ObservacionesBeanRemote;
 import com.beans.UbicacionesBeanRemote;
 import com.beans.UsuarioBeanRemote;
 import com.clases.Fenomeno;
+import com.clases.Observacion;
 import com.clases.Usuario;
 import com.clases.codigueras.CodDepartamento;
 import com.clases.codigueras.CodLocalidad;
@@ -166,6 +170,13 @@ public class ClienteGeoPosUy {
 	
 	}
 		
+	
+	public static DefaultListModel<Fenomeno> obtenerComboFenomenos() throws NamingException {
+		FenomenosBeanRemote fenomenoBeanRemote = EJBLocator.getInstance().lookup(FenomenosBeanRemote.class);
+		return fenomenoBeanRemote.consultarFenomenos();
+	}
+	
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	/*METODOS PARA OBSERVACIONES*/
@@ -176,6 +187,15 @@ public class ClienteGeoPosUy {
 	return observacionesBeanRemote.existeObservacionPorFenomeno(codigo);
 
 		}
+	
+	public static DefaultListModel<Observacion> buscarObservacionesPorFenomenos(LinkedList<Long> codigo) throws Exception {
+
+	ObservacionesBeanRemote observacionesBeanRemote = EJBLocator.getInstance().lookup(ObservacionesBeanRemote.class);
+	return observacionesBeanRemote.buscarObservacionesPorFenomenos(codigo);
+
+		}
+	
+
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	

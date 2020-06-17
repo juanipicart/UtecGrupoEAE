@@ -3,9 +3,12 @@ package com.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 
 import com.bd.DBConector;
 import com.clases.Fenomeno;
@@ -106,8 +109,9 @@ public class FenomenoDaoImpl implements FenomenoDao {
 	}
 
 	@Override
-	public LinkedList<Fenomeno> selectTodosFenomenos() throws Exception {
-		LinkedList<Fenomeno> fenomenos = new LinkedList<>();
+	public DefaultListModel<Fenomeno> consultarFenomenos() throws Exception {
+		DefaultListModel<Fenomeno> fenomenos = new DefaultListModel<>();
+		int contador = 0;
 		bd.setPrepStmt(selectTodosFenomenos);
 		
 		try {
@@ -116,8 +120,10 @@ public class FenomenoDaoImpl implements FenomenoDao {
 			
 			while (resultado.next()) {
 				Fenomeno fenomeno = getFenomenoDesdeResultado(resultado);
-				fenomenos.add(fenomeno);			
-			} return fenomenos;
+				fenomenos.add(contador, fenomeno);	
+				contador++;
+			} 
+			return fenomenos;
 		} catch (ProblemasNivelSQLException e) {
 			throw new ProblemasNivelSQLException("Realizar búsqueda");
 		}
